@@ -1,0 +1,24 @@
+<div ng-controller="StoryReadCtrl">
+	<h1><a href="#/tracker/{{tracker.id}}">{{tracker.title}}</a> &gt; {{story.title}}</h1>
+
+	Search {{story.comments.length}} comments: <input ng-model="query">
+
+	<div>{{story.description}}</div>
+
+	<table>
+		<tr ng-repeat="(key, val) in story.fields">
+			<td>K: {{key}}</td>
+			<td>V: {{val}}</td>
+		</tr>
+	</table>
+	<ul>
+		<li ng-repeat="comment in story.comments | filter:query">
+			{{comment.user.name || comment.user.username}} - {{comment.text}}
+			(<a ng-click="comment_delete(comment.id)">del</a>)
+		</li>
+		<li ng-controller="CommentCreateCtrl">
+			<textarea ng-model="comment.text"></textarea>
+			<br><input type="button" value="Add Comment" ng-click="save()">
+		</li>
+	</ul>
+</div>

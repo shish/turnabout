@@ -1,0 +1,7 @@
+.env
+.coverage
+*.egg-info
+*.swp
+*.sqlite
+*.pyc
+*.pyo

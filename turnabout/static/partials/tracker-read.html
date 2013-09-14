@@ -1,0 +1,21 @@
+<div ng-controller="TrackerReadCtrl">
+	<h1>{{tracker.title || tracker.name}}</h1>
+
+	Search {{stories.length}} stories: <input ng-model="query">
+
+	<ul>
+		<li ng-repeat="story in stories | filter:query | orderBy:'type'">
+			<a href="#/tracker/{{tracker.id}}/story/{{story.id}}">{{story.id}} - {{story.title}} ({{story.type}})</a>
+		</li>
+	</ul>
+
+	<div ng-controller="StoryCreateCtrl">
+		Create new story:
+		<select ng-model="storytype">
+			<option ng-repeat="storytype in storytypes" value="{{storytype.id}}">
+				{{storytype.name}}
+			</option>
+		</select>
+		<input type="button" ng-click="">
+	</div>
+</div>
