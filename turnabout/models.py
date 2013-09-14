@@ -2,6 +2,8 @@ from sqlalchemy import (
     Column, ForeignKey, Index,
     Integer, Float,
     Text, String, Unicode,
+    DateTime,
+    func
     )
 
 from sqlalchemy.ext.declarative import declarative_base
@@ -11,7 +13,7 @@ from sqlalchemy.orm import (
     scoped_session,
     sessionmaker,
     relationship,
-    backref
+    backref,
     )
 
 from zope.sqlalchemy import ZopeTransactionExtension
@@ -22,7 +24,7 @@ Base = declarative_base()
 
 class User(Base):
     __tablename__ = 'user'
-    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, primary_key=True)
     name = Column(Unicode)
     username = Column(Unicode(64), nullable=False)
     password = Column(String(128), nullable=False)
@@ -34,7 +36,7 @@ class User(Base):
 
     def __json__(self, request):
         d = {
-            "id": self.id,
+            "user_id": self.user_id,
             "name": self.name,
             "username": self.username,
         }
@@ -43,31 +45,35 @@ class User(Base):
 
 class Tracker(Base):
     __tablename__ = "tracker"
-    id = Column(Integer, primary_key=True)
+    tracker_id = Column(Integer, primary_key=True)
     name = Column(String(64), nullable=False)
     title = Column(Unicode(64), nullable=False)
 
     def __json__(self, request):
-        return {
-            "id": self.id,
+        d = {
+            "tracker_id": self.tracker_id,
             "name": self.name,
             "title": self.title,
-            "types": self.storytypes,
         }
+        if "tracker_id" in request.matchdict:
+            d.update({
+                "storytypes": self.storytypes,
+            })
+        return d
 
 
 class StoryType(Base):
     __tablename__ = "storytype"
-    id = Column(Integer, primary_key=True)
-    tracker_id = Column(Integer, ForeignKey("tracker.id"), nullable=False)
+    storytype_id = Column(Integer, primary_key=True)
+    tracker_id = Column(Integer, ForeignKey("tracker.tracker_id"), nullable=False)
     name = Column(Unicode, nullable=False)
     fields = Column(postgresql.HSTORE, nullable=False, default={})
 
-    tracker = relationship(Tracker, backref="storytypes")
+    tracker = relationship(Tracker, backref=backref("storytypes", cascade="all, delete-orphan"))
 
     def __json__(self, request):
         return {
-            "id": self.id,
+            "storytype_id": self.storytype_id,
             "name": self.name,
             "fields": self.fields,
         }
@@ -75,27 +81,29 @@ class StoryType(Base):
 
 class Story(Base):
     __tablename__ = "story"
-    id = Column(Integer, primary_key=True)
+    story_id = Column(Integer, primary_key=True)
     title = Column(Unicode, nullable=False)
-    tracker_id = Column(Integer, ForeignKey("tracker.id"), nullable=False)
-    type_id = Column(Integer, ForeignKey("storytype.id"), nullable=False)
+    tracker_id = Column(Integer, ForeignKey("tracker.tracker_id"), nullable=False)
+    type_id = Column(Integer, ForeignKey("storytype.storytype_id"), nullable=False)
     description = Column(Unicode, nullable=False, default=u"")
     rank = Column(Float, nullable=False, default=1000)
     fields = Column(postgresql.HSTORE, nullable=False, default={})
 
-    type = relationship(StoryType)
-    tracker = relationship(Tracker, backref="stories")
+    storytype = relationship(StoryType)
+    tracker = relationship(Tracker, backref=backref("stories", cascade="all, delete-orphan"))
 
     def __json__(self, request):
         d = {
-            "id": self.id,
+            "tracker_id": self.tracker_id,
+            "story_id": self.story_id,
             "title": self.title,
-            "type": self.type.name,
+            "storytype_id": self.type_id,
             "fields": self.fields,
             "rank": self.rank,
         }
         if "story_id" in request.matchdict:
             d.update({
+                "storytype": self.storytype,
                 "description": self.description,
                 "comments": self.comments,
             })
@@ -104,20 +112,27 @@ class Story(Base):
 
 class Comment(Base):
     __tablename__ = "comment"
-    id = Column(Integer, primary_key=True)
-    story_id = Column(Integer, ForeignKey("story.id"), nullable=False)
-    user_id = Column(Integer, ForeignKey("user.id"), nullable=False)
+    comment_id = Column(Integer, primary_key=True)
+    story_id = Column(Integer, ForeignKey("story.story_id"), nullable=False)
+    user_id = Column(Integer, ForeignKey("user.user_id"), nullable=False)
     text = Column(Unicode, nullable=False)
+    posted = Column(DateTime, nullable=False, default=func.now())
 
-    story = relationship(Story, backref="comments")
-    user = relationship(User)
+    story = relationship(Story, backref=backref("comments", cascade="all, delete-orphan"))
+    user = relationship(User, backref=backref("comments", cascade="all, delete-orphan"))
 
     def __json__(self, request):
-        return {
-            "id": self.id,
+        d = {
+            "comment_id": self.comment_id,
             "user": self.user,
             "text": self.text,
+            "posted": str(self.posted)[:16],
         }
+        if "tracker_id" in request.matchdict:
+            d["tracker_id"] = request.matchdict["tracker_id"]
+        if "story_id" in request.matchdict:
+            d["story_id"] = request.matchdict["story_id"]
+        return d
 
 
 #Index('my_index', MyModel.name, unique=True, mysql_length=255)

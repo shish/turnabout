@@ -76,7 +76,7 @@ def add_stub_data():
 
         s1 = Story(
             title=u"A Feature Story",
-            type=feature,
+            storytype=feature,
             tracker=tracker,
             fields={
                 "points": u"3",
@@ -86,13 +86,13 @@ def add_stub_data():
         )
         s1.comments.append(Comment(
             user=user,
-            text=u"Comment on a bug",
+            text=u"Comment on a feature",
         ))
         DBSession.add(s1)
 
         s2 = Story(
             title=u"A Bug Story",
-            type=bug,
+            storytype=bug,
             tracker=tracker,
             fields={
                 "state": u"iced",
@@ -121,7 +121,7 @@ def add_stub_data():
 
         s2 = Story(
             title=u"A Bug Story (in another tracker)",
-            type=bug2,
+            storytype=bug2,
             tracker=tracker2,
             fields={
                 "state": u"iced",

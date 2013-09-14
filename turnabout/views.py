@@ -39,7 +39,7 @@ def tracker_list(request):
 def tracker_read(request):
     try:
         tracker_id = int(request.matchdict["tracker_id"])
-        tracker = DBSession.query(Tracker).filter(Tracker.id==tracker_id).one()
+        tracker = DBSession.query(Tracker).filter(Tracker.tracker_id==tracker_id).one()
         return tracker
     except NoResultFound:
         return TTResponse(status="error", message="Tracker %r not found" % tracker_id)
@@ -74,13 +74,13 @@ def story_create(request):
     )
     DBSession.add(story)
     DBSession.flush()
-    return TTResponse(status="ok", story_id=story.id)
+    return TTResponse(status="ok", story_id=story.story_id)
 
 
 @view_config(request_method="GET", route_name="story", renderer="json")
 def story_read(request):
     try:
-        story = DBSession.query(Story).filter(Story.id==request.matchdict["story_id"]).one()
+        story = DBSession.query(Story).filter(Story.story_id==request.matchdict["story_id"]).one()
         return story
     except NoResultFound:
         return TTResponse(status="error")
@@ -88,7 +88,7 @@ def story_read(request):
 
 @view_config(request_method="PUT", route_name="story", renderer="json")
 def story_update(request):
-    story = DBSession.query(Story).filter(Story.id==request.matchdict["story_id"]).one()
+    story = DBSession.query(Story).filter(Story.story_id==request.matchdict["story_id"]).one()
     story.title = request.json_body["title"]
     story.description = request.json_body["description"]
     fields = {}
@@ -100,7 +100,7 @@ def story_update(request):
 
 @view_config(request_method="DELETE", route_name="story", renderer="json")
 def story_delete(request):
-    story = DBSession.query(Story).filter(Story.id==request.matchdict["story_id"]).one()
+    story = DBSession.query(Story).filter(Story.story_id==request.matchdict["story_id"]).one()
     DBSession.delete(story)
     return TTResponse(status="ok")
 
@@ -112,16 +112,16 @@ def story_delete(request):
 def comment_create(request):
     comment = Comment(
         story_id=request.matchdict["story_id"],
-        user_id=request.user.id,
+        user_id=request.user.user_id,
         text=request.json_body["text"]
     )
     DBSession.add(comment)
     DBSession.flush()
-    return TTResponse(status="ok", comment_id=comment.id)
+    return TTResponse(status="ok", comment_id=comment.comment_id)
 
 
 @view_config(request_method="DELETE", route_name="comment", renderer="json")
 def comment_delete(request):
-    comment = DBSession.query(Comment).filter(Comment.id==request.matchdict["comment_id"]).one()
+    comment = DBSession.query(Comment).filter(Comment.comment_id==request.matchdict["comment_id"]).one()
     DBSession.delete(comment)
     return TTResponse(status="ok")

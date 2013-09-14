@@ -1,24 +1,66 @@
-<div ng-controller="StoryReadCtrl">
-	<h1><a href="#/tracker/{{tracker.id}}">{{tracker.title}}</a> &gt; {{story.title}}</h1>
+<div ng-include src="'static/partials/header.html'"></div>
 
-	Search {{story.comments.length}} comments: <input ng-model="query">
+<div class="container-fluid" ng-controller="StoryReadCtrl">
+	<div class="row-fluid">
+		<div class="span8">
 
-	<div>{{story.description}}</div>
+<section class="story">
+	<div class="ss tightform">
+		<input ng-model="story.title" style="font-size: 1.5em; height: 2em; width: 100%;" />
+	</div>
+	<div class="ss tightform">
+		{{story.description}}
+		<br><textarea style="width: 100%;" ng-model="story.description" rows="6">{{story.description}}</textarea>
+	</div>
+</section>
 
-	<table>
-		<tr ng-repeat="(key, val) in story.fields">
-			<td>K: {{key}}</td>
-			<td>V: {{val}}</td>
-		</tr>
-	</table>
+<section class="comments">
+	<div class="ss tightform">
+		<input ng-model="query" placeholder="Search {{story.comments.length}} comments" style="width: 100%;">
+	</div>
+
 	<ul>
-		<li ng-repeat="comment in story.comments | filter:query">
-			{{comment.user.name || comment.user.username}} - {{comment.text}}
-			(<a ng-click="comment_delete(comment.id)">del</a>)
-		</li>
-		<li ng-controller="CommentCreateCtrl">
-			<textarea ng-model="comment.text"></textarea>
-			<br><input type="button" value="Add Comment" ng-click="save()">
+		<li class="ss" ng-repeat="comment in story.comments | filter:query">
+			<span class="username">{{comment.user.name || comment.user.username}}</span>
+			<time>{{comment.posted}}</time>
+			<a class="del" ng-click="comment_delete(comment)">del</a>
+			<p>{{comment.text}}</p>
 		</li>
 	</ul>
+
+	<div class="ss tightform" ng-controller="CommentCreateCtrl">
+		<textarea ng-model="comment.text" style="width: 100%;" rows="6"></textarea>
+		<br><input style="width: 100%;" type="button" value="Add Comment" ng-click="save()">
+	</div>
+</section>
+
+		</div>
+		<div class="span4">
+
+<section>
+	<div class="ss">
+		<a ng-click="save()">Save</a> |
+		<a ng-click="delete()">Delete</a>
+	</div>
+	<table class="ss" style="width: 90%;">
+		<tr ng-repeat="(key, val) in story.storytype.fields">
+			<td style="text-align: right; padding: 2px 4px;">{{key}}:</td>
+			<td style="width: 100%; padding: 2px 4px;">
+				{{story.fields[key]}}
+			</td>
+			<!-- <td>R: {{val}}</td> -->
+		</tr>
+	</table>
+	<div class="ss tightform">
+		<form action="/upload" method="POST" style="margin: 0px;">
+			<input type="hidden" name="tracker_id" value="{{tracker.tracker_id}}">
+			<input type="hidden" name="story_id" value="{{story.story_id}}">
+			<input type="file" name="file" style="width: 100%;">
+			<br><input type="submit" value="Upload" style="width: 100%;">
+		</form>
+	</div>
+</section>
+
+		</div>
+	</div>
 </div>

@@ -1,3 +1,9 @@
+<div ng-include src="'static/partials/header.html'"></div>
+
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span6">
+
 <div ng-controller="TrackerListCtrl">
 	<h1>Trackers</h1>
 
@@ -5,7 +11,14 @@
 
 	<ul>
 		<li ng-repeat="tracker in trackers | filter:query | orderBy:name">
-			<a href="#/tracker/{{tracker.id}}">{{tracker.title || tracker.name}}</a>
+			<a href="#/tracker/{{tracker.tracker_id}}">{{tracker.title || tracker.name}}</a>
 		</li>
 	</ul>
+</div>
+
+		</div>
+		<div class="span6">
+			Some intro
+		</div>
+	</div>
 </div>

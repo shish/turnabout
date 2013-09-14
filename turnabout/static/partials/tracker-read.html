@@ -1,21 +1,36 @@
-<div ng-controller="TrackerReadCtrl">
-	<h1>{{tracker.title || tracker.name}}</h1>
+<div ng-include src="'static/partials/header.html'"></div>
 
-	Search {{stories.length}} stories: <input ng-model="query">
+<div class="container-fluid" ng-controller="TrackerReadCtrl">
+	<div class="row-fluid">
+		<div class="span8">
+
+<section class="stories">
+	<div class="ss tightform">
+		<input ng-model="query" placeholder="Search {{stories.length}} stories" style="width: 100%;" />
+	</div>
 
 	<ul>
-		<li ng-repeat="story in stories | filter:query | orderBy:'type'">
-			<a href="#/tracker/{{tracker.id}}/story/{{story.id}}">{{story.id}} - {{story.title}} ({{story.type}})</a>
+		<li class="ss" ng-repeat="story in stories | filter:query | orderBy:'type'">
+			<a href="#/tracker/{{tracker.tracker_id}}/story/{{story.story_id}}">{{story.story_id}} - {{story.title}} ({{story.type}})</a>
 		</li>
 	</ul>
+</section>
 
-	<div ng-controller="StoryCreateCtrl">
+		</div>
+		<div class="span4">
+
+<section>
+	<div class="ss tightform" ng-controller="StoryCreateCtrl">
 		Create new story:
 		<select ng-model="storytype">
-			<option ng-repeat="storytype in storytypes" value="{{storytype.id}}">
+			<option ng-repeat="storytype in storytypes" value="{{storytype.storytype_id}}">
 				{{storytype.name}}
 			</option>
 		</select>
-		<input type="button" ng-click="">
+		<input type="button" ng-click="" value="Create">
+	</div>
+</section>
+
+		</div>
 	</div>
 </div>
