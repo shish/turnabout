@@ -2,6 +2,7 @@ import unittest
 import transaction
 
 from pyramid import testing
+from pyramid.exceptions import NotFound
 
 from .models import DBSession, Base, User
 from turnabout.scripts.initializedb import add_stub_data
@@ -37,7 +38,7 @@ class TestIndex(TurnaboutTest):
         self.assertEqual(info, {})
 
 
-from .views import tracker_list, tracker_read
+from .views import tracker_list, tracker_create, tracker_read, tracker_update
 
 class TestTrackerList(TurnaboutTest):
     def test(self):
@@ -46,11 +47,47 @@ class TestTrackerList(TurnaboutTest):
         self.assertEqual(trackers[0].name, 'tt')
 
 
-class TestTrackerRead(TurnaboutTest):
+class TestTrackerCreate(TurnaboutTest):
     def test(self):
+        request = testing.DummyRequest(user=self.user, json_body={
+            "name": "mytracker",
+            "title": u"A new tracker",
+        })
+        resp = tracker_create(request)
+        self.assertEqual(resp.status, "ok")
+
+        request = testing.DummyRequest(matchdict={"tracker_id": resp.tracker_id})
+        trackers = tracker_list(request)
+        self.assertEqual(trackers[-1].title, u"A new tracker")
+
+
+class TestTrackerRead(TurnaboutTest):
+    def test_pass(self):
         request = testing.DummyRequest(matchdict={"tracker_id": "1"})
         tracker = tracker_read(request)
         self.assertEqual(tracker.name, 'tt')
+
+    def test_fail(self):
+        request = testing.DummyRequest(matchdict={"tracker_id": "9999"})
+        self.assertRaises(NotFound, tracker_read, request)
+
+        request = testing.DummyRequest(matchdict={"tracker_id": "moo"})
+        self.assertRaises(NotFound, tracker_read, request)
+
+
+class TestTrackerUpdate(TurnaboutTest):
+    def test_pass(self):
+        request = testing.DummyRequest(matchdict={"tracker_id": "1"}, json_body={"name": "renamed", "title": "New Title"})
+        resp = tracker_update(request)
+        self.assertEqual(resp.status, 'ok')
+
+        request = testing.DummyRequest(matchdict={"tracker_id": "1"})
+        tracker = tracker_read(request)
+        self.assertEqual(tracker.name, 'renamed')
+
+    def test_fail(self):
+        request = testing.DummyRequest(matchdict={"tracker_id": "9999"}, json_body={"name": "renamed", "title": "New Title"})
+        self.assertRaises(NotFound, tracker_read, request)
 
 
 from .views import storytype_list
@@ -88,10 +125,17 @@ class TestStoryCreate(TurnaboutTest):
 
 
 class TestStoryRead(TurnaboutTest):
-    def test(self):
+    def test_pass(self):
         request = testing.DummyRequest(matchdict={"tracker_id": "1", "story_id": "1"})
         story = story_read(request)
         self.assertEqual(story.title, "A Feature Story")
+
+    def test_fail(self):
+        request = testing.DummyRequest(matchdict={"tracker_id": "1", "story_id": "9999"})
+        self.assertRaises(NotFound, story_read, request)
+
+        request = testing.DummyRequest(matchdict={"tracker_id": "9999", "story_id": "1"})
+        self.assertRaises(NotFound, story_read, request)
 
 
 class TestStoryUpdate(TurnaboutTest):
@@ -114,7 +158,7 @@ class TestStoryUpdate(TurnaboutTest):
 
 
 class TestStoryDelete(TurnaboutTest):
-    def test(self):
+    def test_pass(self):
         request = testing.DummyRequest(matchdict={"tracker_id": "1"}, user=self.user, json_body={
             "title": u"A new story",
             "description": u"",
@@ -129,8 +173,14 @@ class TestStoryDelete(TurnaboutTest):
         self.assertEqual(resp2.status, "ok")
 
         request = testing.DummyRequest(matchdict={"tracker_id": "1", "story_id": resp.story_id})
-        story = story_read(request)
-        self.assertEqual(story.status, "error")
+        self.assertRaises(NotFound, story_read, request)
+
+    def test_fail(self):
+        request = testing.DummyRequest(matchdict={"tracker_id": "1", "story_id": "9999"})
+        self.assertRaises(NotFound, story_delete, request)
+
+        request = testing.DummyRequest(matchdict={"tracker_id": "9999", "story_id": "1"})
+        self.assertRaises(NotFound, story_delete, request)
 
 
 from .views import comment_create, comment_delete

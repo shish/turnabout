@@ -5,25 +5,26 @@
 		<div class="span8">
 
 <section class="story">
-	<div class="ss tightform">
-		<input ng-model="story.title" style="font-size: 1.5em; height: 2em; width: 100%;" />
+	<div class="ss tightform form">
+		<div style="font-size: 1.5em; padding: 0.5em 0.2em;" ng-hide="story.editing">{{story.title}}</div>
+		<input ng-model="story.title" style="font-size: 1.5em; height: 2em;" ng-show="story.editing" />
 	</div>
-	<div class="ss tightform">
-		{{story.description}}
-		<br><textarea style="width: 100%;" ng-model="story.description" rows="6">{{story.description}}</textarea>
+	<div class="ss tightform form">
+		<span ng-hide="story.editing">{{story.description}}</span>
+		<textarea ng-show="story.editing" ng-model="story.description" rows="6">{{story.description}}</textarea>
 	</div>
 </section>
 
 <section class="comments">
 	<div class="ss tightform">
-		<input ng-model="query" placeholder="Search {{story.comments.length}} comments" style="width: 100%;">
+		<input ng-model="query" placeholder="Filter {{story.comments.length}} comments" style="width: 100%;">
 	</div>
 
 	<ul>
 		<li class="ss" ng-repeat="comment in story.comments | filter:query">
 			<span class="username">{{comment.user.name || comment.user.username}}</span>
 			<time>{{comment.posted}}</time>
-			<a class="del" ng-click="comment_delete(comment)">del</a>
+			<a class="del" ng-click="comment_delete(comment)">Delete</a>
 			<p>{{comment.text}}</p>
 		</li>
 	</ul>
@@ -39,18 +40,21 @@
 
 <section>
 	<div class="ss">
-		<a ng-click="save()">Save</a> |
+		<a ng-click="edit()" ng-hide="story.editing">Edit</a>
+		<a ng-click="save()" ng-show="story.editing">Save</a> |
 		<a ng-click="delete()">Delete</a>
 	</div>
-	<table class="ss" style="width: 90%;">
-		<tr ng-repeat="(key, val) in story.storytype.fields">
-			<td style="text-align: right; padding: 2px 4px;">{{key}}:</td>
-			<td style="width: 100%; padding: 2px 4px;">
-				{{story.fields[key]}}
-			</td>
-			<!-- <td>R: {{val}}</td> -->
-		</tr>
-	</table>
+	<div class="ss">
+		<table style="width: auto;">
+			<tr ng-repeat="(key, val) in story.storytype.fields">
+				<td style="text-align: right; padding: 2px 4px;">{{key}}:</td>
+				<td style="width: 100%; padding: 2px 4px;">
+					{{story.fields[key]}}
+				</td>
+				<!-- <td>R: {{val}}</td> -->
+			</tr>
+		</table>
+	</div>
 	<div class="ss tightform">
 		<form action="/upload" method="POST" style="margin: 0px;">
 			<input type="hidden" name="tracker_id" value="{{tracker.tracker_id}}">

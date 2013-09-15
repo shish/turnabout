@@ -14,8 +14,9 @@
 
 			<div class="nav-collapse">
 				<ul class="nav">
-					<li><a href="http://m.ratehereratenow.com">Mobile</a></li>
-					<li><a href="/about">About</a></li>
+					<li ng-repeat="tracker in trackers">
+						<a href="#/tracker/{{tracker.tracker_id}}">{{tracker.title || tracker.name}}</a>
+					</li>
 				</ul>
 			</div>
 
