@@ -58,10 +58,19 @@
 	<div class="ss tightform">
 		<div class="row-fluid" ng-repeat="attachments in story.attachments | groupCount:3">
 			<div class="span4" style="text-align: center;" ng-repeat="attachment in attachments">
-				<a style="background: white;" class="thumbnail" href="{{attachment.data_url}}">
+				<a style="background: white; position: relative;" class="thumbnail" href="{{attachment.data_url}}">
+				<!--
+					<div style="
+						position: absolute; top: 0px; right: 0px;
+						border-left: 1px solid #888;
+						border-bottom: 1px solid #888;
+						border-bottom-left-radius: 4px;
+						width: 1em;" ng-click="attachment_delete(attachment)">x</div>
+				-->
 					<img src="{{attachment.thumbnail_url}}" />
 				</a>
 				{{attachment.filename}}
+				<a ng-click="attachment_delete(attachment)">Delete</a>
 			</div>
 		</div>
 

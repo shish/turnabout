@@ -118,6 +118,8 @@ class Attachment(Base):
     filename = Column(Unicode, nullable=False)
     data = Column(LargeBinary, nullable=False)
     hash = Column(String, nullable=False)
+    size = Column(Integer, nullable=False)
+    mime = Column(String, nullable=False)
     story_id = Column(Integer, ForeignKey("story.story_id"), nullable=False)
     user_id = Column(Integer, ForeignKey("user.user_id"), nullable=False)
     posted = Column(DateTime, nullable=False, default=func.now())
@@ -126,13 +128,19 @@ class Attachment(Base):
     user = relationship(User, backref=backref("attachments", cascade="all, delete-orphan"))
 
     def __json__(self, request):
-        return {
+        d = {
+            "attachment_id": self.attachment_id,
             "filename": self.filename,
             "hash": self.hash,
             "data_url": "x",
             "thumbnail_url": "/static/img/thumbnail.png",
             "posted": str(self.posted)[:16],
         }
+        if "tracker_id" in request.matchdict:
+            d["tracker_id"] = request.matchdict["tracker_id"]
+        if "story_id" in request.matchdict:
+            d["story_id"] = request.matchdict["story_id"]
+        return d
 
 
 class Comment(Base):

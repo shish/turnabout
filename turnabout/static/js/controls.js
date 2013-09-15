@@ -53,7 +53,7 @@ function StoryCreateCtrl($scope, $route, $routeParams, Story) {
 	};
 }
 
-function StoryReadCtrl($scope, $route, $routeParams, Tracker, Story, Comment) {
+function StoryReadCtrl($scope, $route, $routeParams, Tracker, Story, Comment, Attachment) {
 	$scope.tracker = Tracker.get({tracker_id: $routeParams.tracker_id});
 	$scope.story = Story.get({tracker_id: $routeParams.tracker_id, story_id: $routeParams.story_id});
 
@@ -73,8 +73,14 @@ function StoryReadCtrl($scope, $route, $routeParams, Tracker, Story, Comment) {
 	};
 	$scope.comment_delete = function(comment) {
 		Comment.remove(comment, function() {
-			// delete story.comments[X];  // only deletes part of the HTML?
-			$route.reload();
+			var index = $scope.story.comments.indexOf(comment);
+			$scope.story.comments.splice(index, 1);
+		});
+	};
+	$scope.attachment_delete = function(attachment) {
+		Attachment.remove(attachment, function() {
+			var index = $scope.story.attachments.indexOf(attachment);
+			$scope.story.attachments.splice(index, 1);
 		});
 	};
 }

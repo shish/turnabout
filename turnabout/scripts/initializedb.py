@@ -19,6 +19,7 @@ from ..models import (
     StoryType,
     Story,
     Comment,
+    Attachment,
     )
 
 
@@ -87,6 +88,14 @@ def add_stub_data():
         s1.comments.append(Comment(
             user=user,
             text=u"Comment on a feature",
+        ))
+        s1.attachments.append(Attachment(
+            user=user,
+            filename="test attachment.txt",
+            data="hello world!",
+            hash="x",
+            mime="text/plain",
+            size=0,
         ))
         DBSession.add(s1)
 
