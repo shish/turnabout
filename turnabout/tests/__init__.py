@@ -17,12 +17,14 @@ class TurnaboutTest(unittest.TestCase):
         from sqlalchemy import create_engine
         engine = create_engine('postgres://shish:shish@localhost/test')
         DBSession.configure(bind=engine)
-        Base.metadata.drop_all(engine)
+        #Base.metadata.drop_all(engine)
         Base.metadata.create_all(engine)
+        DBSession.begin_nested()
         add_stub_data()
 
         self.user = User.by_username("shish")
 
     def tearDown(self):
+        DBSession.rollback()
         DBSession.remove()
         testing.tearDown()
