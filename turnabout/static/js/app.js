@@ -7,4 +7,14 @@ angular.module('turnabout', ['ngRoute', 'turnaboutServices', 'ui.sortable'])
 			when('/tracker/:tracker_id/story/:story_id', {templateUrl: 'static/partials/story-read.html', controller: StoryReadCtrl}).
 			otherwise({redirectTo: '/tracker'});
 	}])
+	.filter('groupCount', function() {
+		return function(input, count) {
+			var rows = [];
+			for (var i = 0; i < input.length; i++) {
+				if ( i % count == 0) rows.push([]);
+					rows[rows.length-1].push(input[i]);
+				}
+			return rows;
+		}
+	})
 	;

@@ -1,6 +1,9 @@
+import hashlib
+
 from pyramid.response import Response
 from pyramid.view import view_config
 from pyramid.exceptions import NotFound, Forbidden
+from pyramid.httpexceptions import HTTPFound
 
 from sqlalchemy.exc import DBAPIError
 from sqlalchemy.orm.exc import NoResultFound
@@ -10,6 +13,7 @@ from .models import (
     Tracker,
     StoryType,
     Story,
+    Attachment,
     Comment,
     )
 
@@ -132,6 +136,9 @@ def story_update(request):
         fields = {}
         fields.update(story.fields)
         fields.update(request.json_body["fields"])
+        for n in fields.keys():
+            if fields[n] is None or fields[n] == "":
+                del fields[n]
         story.fields = fields
         return TTResponse(status="ok")
     except (NoResultFound, ValueError):
@@ -148,6 +155,26 @@ def story_delete(request):
         return TTResponse(status="ok")
     except (NoResultFound, ValueError):
         raise NotFound("Story %r not found" % request.matchdict.get("story_id"))
+
+
+#######################################################################
+# Attachment
+
+@view_config(request_method="POST", route_name="attachments", renderer="json")
+def attachment_create(request):
+    data = request.POST["file"].file.read()
+    attachment = Attachment(
+        story_id=request.matchdict["story_id"],
+        user_id=request.user.user_id,
+        filename=request.POST["file"].filename,
+        data=data,
+        hash=hashlib.sha256(data).hexdigest(),
+    )
+    DBSession.add(attachment)
+    DBSession.flush()
+    if True:  # if not xhr
+        return HTTPFound("/#/tracker/"+request.matchdict["tracker_id"]+"/story/"+request.matchdict["story_id"])
+    return TTResponse(status="ok", attachment_id=attachment.attachment_id)
 
 
 #######################################################################

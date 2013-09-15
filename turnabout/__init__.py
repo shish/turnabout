@@ -32,6 +32,9 @@ def configure_routes(config):
     config.add_route('comments', '/tracker/{tracker_id}/story/{story_id}/comment')
     config.add_route('comment', '/tracker/{tracker_id}/story/{story_id}/comment/{comment_id}')
 
+    config.add_route('attachments', '/tracker/{tracker_id}/story/{story_id}/attachment')
+    config.add_route('attachment', '/tracker/{tracker_id}/story/{story_id}/attachment/{attachment_id}')
+
     config.scan("turnabout")
 
 

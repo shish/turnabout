@@ -56,9 +56,19 @@
 		</table>
 	</div>
 	<div class="ss tightform">
-		<form action="/upload" method="POST" style="margin: 0px;">
-			<input type="hidden" name="tracker_id" value="{{tracker.tracker_id}}">
-			<input type="hidden" name="story_id" value="{{story.story_id}}">
+		<div class="row-fluid" ng-repeat="attachments in story.attachments | groupCount:3">
+			<div class="span4" style="text-align: center;" ng-repeat="attachment in attachments">
+				<a style="background: white;" class="thumbnail" href="{{attachment.data_url}}">
+					<img src="{{attachment.thumbnail_url}}" />
+				</a>
+				{{attachment.filename}}
+			</div>
+		</div>
+
+		<hr ng-show="story.attachments" />
+
+		<form action="/tracker/{{tracker.tracker_id}}/story/{{story.story_id}}/attachment"
+				enctype="multipart/form-data" method="POST" style="margin: 0px;">
 			<input type="file" name="file" style="width: 100%;">
 			<br><input type="submit" value="Upload" style="width: 100%;">
 		</form>

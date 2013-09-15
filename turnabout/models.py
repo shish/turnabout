@@ -3,7 +3,8 @@ from sqlalchemy import (
     Integer, Float,
     Text, String, Unicode,
     DateTime,
-    func
+    LargeBinary,
+    func,
     )
 
 from sqlalchemy.ext.declarative import declarative_base
@@ -106,8 +107,32 @@ class Story(Base):
                 "storytype": self.storytype,
                 "description": self.description,
                 "comments": self.comments,
+                "attachments": self.attachments,
             })
         return d
+
+
+class Attachment(Base):
+    __tablename__ = "attachment"
+    attachment_id = Column(Integer, primary_key=True)
+    filename = Column(Unicode, nullable=False)
+    data = Column(LargeBinary, nullable=False)
+    hash = Column(String, nullable=False)
+    story_id = Column(Integer, ForeignKey("story.story_id"), nullable=False)
+    user_id = Column(Integer, ForeignKey("user.user_id"), nullable=False)
+    posted = Column(DateTime, nullable=False, default=func.now())
+
+    story = relationship(Story, backref=backref("attachments", cascade="all, delete-orphan"))
+    user = relationship(User, backref=backref("attachments", cascade="all, delete-orphan"))
+
+    def __json__(self, request):
+        return {
+            "filename": self.filename,
+            "hash": self.hash,
+            "data_url": "x",
+            "thumbnail_url": "/static/img/thumbnail.png",
+            "posted": str(self.posted)[:16],
+        }
 
 
 class Comment(Base):
