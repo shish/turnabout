@@ -77,6 +77,12 @@ def add_stub_data():
 
         s1 = Story(
             title=u"A Feature Story",
+            description=u"""
+# Markdown support!
+
+- format your stories sanely
+- *italic*, **bold**
+            """,
             storytype=feature,
             tracker=tracker,
             fields={

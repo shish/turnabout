@@ -7,7 +7,8 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</a>
-			<a class="brand" href="/">{{tracker.title}}</a>
+			<a class="brand" ng-show="tracker" href="/#/tracker/{{tracker.tracker_id}}">{{tracker.title}}</a>
+			<a class="brand" ng-hide="tracker" href="/">Turnabout Tracker</a>
 
 			<form class="navbar-form pull-right">
 			</form>

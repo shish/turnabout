@@ -10,9 +10,7 @@ function HeaderCtrl($scope, $routeParams, Tracker) {
 		$scope.tracker = Tracker.get({tracker_id: $routeParams.tracker_id});
 	}
 	else {
-		$scope.tracker = {
-			title: "Turnabout Tracker",
-		};
+		$scope.tracker = null;
 	}
 }
 
@@ -58,13 +56,16 @@ function StoryReadCtrl($scope, $route, $routeParams, Tracker, Story, Comment, At
 	$scope.story = Story.get({tracker_id: $routeParams.tracker_id, story_id: $routeParams.story_id});
 
 	$scope.edit = function() {
+		$scope.story_pre_edit = angular.copy($scope.story);
 		$scope.story.editing = true;
 	};
 	$scope.save = function() {
 		Story.save(angular.copy($scope.story), function() {
 			$scope.story.editing = false;
-			alert("Saved");
 		});
+	};
+	$scope.cancel = function() {
+		$scope.story = angular.copy($scope.story_pre_edit);
 	};
 	$scope.delete = function() {
 		Story.remove($scope.story, function() {

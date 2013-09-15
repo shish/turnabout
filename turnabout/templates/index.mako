@@ -18,6 +18,7 @@ vim:ft=html
 		<script src="/static/js/vendor/sortable.js"></script>
 
 		<script src="/static/js/vendor/showdown.js"></script>
+		<script src="/static/js/vendor/angular.markdown.js"></script>
 		<script src="/static/js/services.js"></script>
 		<script src="/static/js/app.js"></script>
 		<script src="/static/js/controls.js"></script>

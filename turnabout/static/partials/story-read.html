@@ -6,12 +6,12 @@
 
 <section class="story">
 	<div class="ss tightform form">
-		<div style="font-size: 1.5em; padding: 0.5em 0.2em;" ng-hide="story.editing">{{story.title}}</div>
 		<input ng-model="story.title" style="font-size: 1.5em; height: 2em;" ng-show="story.editing" />
+		<div style="font-size: 1.5em; padding: 0.5em 0.2em;" ng-hide="story.editing">{{story.title}}</div>
 	</div>
 	<div class="ss tightform form">
-		<span ng-hide="story.editing">{{story.description}}</span>
-		<textarea ng-show="story.editing" ng-model="story.description" rows="6">{{story.description}}</textarea>
+		<textarea ng-show="story.editing" ng-model="story.description" rows="6"></textarea>
+		<markdown ng-model="story.description"></markdown>
 	</div>
 </section>
 
@@ -40,16 +40,18 @@
 
 <section>
 	<div class="ss">
-		<a ng-click="edit()" ng-hide="story.editing">Edit</a>
-		<a ng-click="save()" ng-show="story.editing">Save</a> |
+		<span ng-hide="story.editing"><a ng-click="edit()">Edit</a> |</span>
+		<span ng-show="story.editing"><a ng-click="save()">Save</a> |</span>
+		<span ng-show="story.editing"><a ng-click="cancel()">Cancel</a> |</span>
 		<a ng-click="delete()">Delete</a>
 	</div>
 	<div class="ss">
-		<table style="width: auto;">
+		<table style="width: auto;" class="form tightform">
 			<tr ng-repeat="(key, val) in story.storytype.fields">
 				<td style="text-align: right; padding: 2px 4px;">{{key}}:</td>
 				<td style="width: 100%; padding: 2px 4px;">
-					{{story.fields[key]}}
+					<span ng-hide="story.editing">{{story.fields[key]}}</span>
+					<input type="text" ng-show="story.editing" ng-model="story.fields[key]" />
 				</td>
 				<!-- <td>R: {{val}}</td> -->
 			</tr>
@@ -74,7 +76,7 @@
 			</div>
 		</div>
 
-		<hr ng-show="story.attachments" />
+		<hr ng-show="story.attachments.length" />
 
 		<form action="/tracker/{{tracker.tracker_id}}/story/{{story.story_id}}/attachment"
 				enctype="multipart/form-data" method="POST" style="margin: 0px;">

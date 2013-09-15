@@ -1,5 +1,5 @@
 
-angular.module('turnabout', ['ngRoute', 'turnaboutServices', 'ui.sortable'])
+angular.module('turnabout', ['ngRoute', 'turnaboutServices', 'ui.sortable', 'angular.markdown'])
 	.config(['$routeProvider', function($routeProvider) {
 		$routeProvider.
 			when('/tracker', {templateUrl: 'static/partials/tracker-list.html', controller: TrackerListCtrl}).
