@@ -9,6 +9,7 @@ vim:ft=html
 
 		<script src='/static/js/vendor/jquery-1.8.3.js'></script>
 		<script src="/static/js/vendor/jquery-ui-1.8.23-min.js"></script>
+		<script src="/static/js/vendor/bootstrap-2.3.2-min.js"></script>
 
 		<script src="/static/js/vendor/angular.js"></script>
 		<script src="/static/js/vendor/angular-route.js"></script>

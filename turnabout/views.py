@@ -122,7 +122,7 @@ def story_list(request):
 
 @view_config(request_method="POST", route_name="stories", renderer="json")
 def story_create(request):
-    storytype = DBSession.query(StoryType).filter(StoryType.tracker_id==request.matchdict["tracker_id"], StoryType.name==request.json_body["type"]).one()
+    storytype = DBSession.query(StoryType).filter(StoryType.tracker_id==request.matchdict["tracker_id"], StoryType.name==request.json_body["storytype"]).one()
     story = Story(
         tracker_id=request.matchdict["tracker_id"],
         title=request.json_body["title"],

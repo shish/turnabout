@@ -1,26 +1,36 @@
 <section ng-show="storytypes.length">
 	<h3>Create New Story</h3>
 	<div class="ss tightform form" ng-controller="StoryCreateCtrl">
-		<table style="width: 100%;">
-			<tr>
-				<td>Title</td>
-				<td><input type="text" ng-model="title" /></td>
-			</tr>
-			<tr>
-				<td>Type</td>
-				<td>
-					<select ng-model="storytype">
-						<option ng-repeat="storytype in storytypes" value="{{storytype.storytype_id}}">
-							{{storytype.name}}
-						</option>
-					</select>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="2">
-					<input type="button" ng-click="" value="Create">
-				</td>
-			</tr>
+		<table class="form">
+			<tbody>
+				<tr>
+					<td>Title:</td>
+					<td><input type="text" ng-model="story.title" /></td>
+				</tr>
+				<tr>
+					<td>Type:</td>
+					<td>
+						<select ng-model="story.storytype">
+							<option ng-repeat="storytype in storytypes" value="{{storytype.name}}">
+								{{storytype.name}}
+							</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>Description:</td>
+					<td>
+						<textarea ng-model="story.description"></textarea>
+					</td>
+				</tr>
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="2">
+						<input type="button" ng-click="create()" value="Create">
+					</td>
+				</tr>
+			</tfoot>
 		</table>
 	</div>
 </section>

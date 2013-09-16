@@ -6,16 +6,22 @@ function getStoryType(tracker, name) {
 }
 
 function HeaderCtrl($scope, $routeParams, Tracker) {
-	if($routeParams.tracker_id) {
-		$scope.tracker = Tracker.get({tracker_id: $routeParams.tracker_id});
+	if(!$scope.tracker) {
+		if($routeParams.tracker_id) {
+			$scope.tracker = Tracker.read({tracker_id: $routeParams.tracker_id});
+		}
+		else {
+			$scope.tracker = null;
+		}
 	}
-	else {
-		$scope.tracker = null;
+
+	if(!$scope.trackers) {
+		$scope.trackers = Tracker.list();
 	}
 }
 
 function TrackerListCtrl($scope, Tracker) {
-	$scope.trackers = Tracker.query();
+	$scope.trackers = Tracker.list();
 }
 
 function TrackerCreateCtrl($scope, $route, $routeParams, Tracker) {
@@ -35,7 +41,7 @@ function TrackerCreateCtrl($scope, $route, $routeParams, Tracker) {
 }
 
 function TrackerReadCtrl($scope, $routeParams, Tracker, Story, StoryType) {
-	$scope.tracker = Tracker.get({tracker_id: $routeParams.tracker_id});
+	$scope.tracker = Tracker.read({tracker_id: $routeParams.tracker_id});
 	$scope.stories = Story.query({tracker_id: $routeParams.tracker_id});
 	$scope.storytypes = StoryType.query({tracker_id: $routeParams.tracker_id});
 
@@ -46,14 +52,21 @@ function TrackerReadCtrl($scope, $routeParams, Tracker, Story, StoryType) {
 	};
 }
 
-function StoryCreateCtrl($scope, $route, $routeParams, Story) {
+function StoryCreateCtrl($scope, $route, $routeParams, $location, Story) {
 	$scope.story = {
 		tracker_id: $routeParams.tracker_id,
 	};
+
+	$scope.create = function() {
+		Story.create($scope.story, function(response) {
+			$scope.story.story_id = response.story_id;
+			$location.path("/tracker/"+$scope.story.tracker_id+"/story/"+$scope.story.story_id);
+		});
+	};
 }
 
-function StoryReadCtrl($scope, $route, $routeParams, Tracker, Story, Comment, Attachment) {
-	$scope.tracker = Tracker.get({tracker_id: $routeParams.tracker_id});
+function StoryReadCtrl($scope, $route, $routeParams, $location, Tracker, Story, Comment, Attachment) {
+	$scope.tracker = Tracker.read({tracker_id: $routeParams.tracker_id});
 	$scope.story = Story.get({tracker_id: $routeParams.tracker_id, story_id: $routeParams.story_id});
 
 	$scope.edit = function() {
@@ -61,7 +74,7 @@ function StoryReadCtrl($scope, $route, $routeParams, Tracker, Story, Comment, At
 		$scope.story.editing = true;
 	};
 	$scope.save = function() {
-		Story.save(angular.copy($scope.story), function() {
+		Story.update(angular.copy($scope.story), function() {
 			$scope.story.editing = false;
 		});
 	};
@@ -70,7 +83,7 @@ function StoryReadCtrl($scope, $route, $routeParams, Tracker, Story, Comment, At
 	};
 	$scope.delete = function() {
 		Story.remove($scope.story, function() {
-			$route.location("/tracker/"+$routeParams.tracker_id);
+			$location.path("/tracker/"+$routeParams.tracker_id);
 		});
 	};
 	$scope.comment_delete = function(comment) {

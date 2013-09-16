@@ -10,16 +10,25 @@
 			<a class="brand" ng-show="tracker" href="/#/tracker/{{tracker.tracker_id}}">{{tracker.title}}</a>
 			<a class="brand" ng-hide="tracker" href="/">Turnabout Tracker</a>
 
+			<div class="nav-collapse">
+				<ul class="nav">
+					<li><a class="nav" href="/">Home</a></li>
+				</ul>
+			</div>
+
 			<form class="navbar-form pull-right">
 			</form>
 
-			<div class="nav-collapse">
-				<ul class="nav">
-					<li ng-repeat="tracker in trackers">
-						<a href="#/tracker/{{tracker.tracker_id}}">{{tracker.title || tracker.name}}</a>
-					</li>
-				</ul>
-			</div>
+			<ul class="nav dropdown pull-right">
+				<li class="dropdown">
+					<a href="javascript: return false;" class="dropdown-toggle" data-toggle="dropdown">My Trackers <b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li ng-repeat="tracker in trackers">
+							<a href="#/tracker/{{tracker.tracker_id}}">{{tracker.title || tracker.name}}</a>
+						</li>
+					</ul>
+				</li>
+			</ul>
 
 		</div>
 	</div>

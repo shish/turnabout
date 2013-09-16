@@ -38,6 +38,16 @@ SECTION .ss {
 	box-shadow: inset 0 0 4px #888;
 }
 
+TABLE.form {
+	width: 100%;
+}
+TABLE.form TBODY TD:first-child {
+	text-align: right;
+	width: 10px;
+	padding-right: 8px;
+	padding-left: 8px;
+}
+
 .tightform INPUT,
 .tightform TEXTAREA,
 .tightform SELECT {

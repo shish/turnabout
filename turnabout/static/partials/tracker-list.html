@@ -1,6 +1,6 @@
-<div ng-include src="'static/partials/header.html'"></div>
-
 <div class="container-fluid" ng-controller="TrackerListCtrl">
+	<div ng-include src="'static/partials/header.html'"></div>
+
 	<div class="row-fluid">
 		<div class="span6">
 
@@ -19,9 +19,23 @@
 <section>
 	<h3>Create New Tracker</h3>
 	<div class="ss tightform form" ng-controller="TrackerCreateCtrl">
-		<input type="text" ng-model="tracker.name" placeholder="Name (lowercase a-z, 0-9)" />
-		<input type="text" ng-model="tracker.title" placeholder="Title (any characters)" />
-		<input type="button" ng-click="save()" value="Create">
+		<table class="form">
+			<tbody>
+				<tr>
+					<td>Full&nbsp;Title:</td>
+					<td><input type="text" ng-model="tracker.title" placeholder="Any Characters"></td>
+				</tr>
+				<tr>
+					<td>Short&nbsp;Name:</td>
+					<td><input type="text" ng-model="tracker.name" placeholder="Lowercase a-z, 0-9"></td>
+				</tr>
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="2"><input type="button" value="Create" ng-click="save()"></td>
+				</tr>
+			</tfoot>
+		</table>
 	</div>
 </section>
 

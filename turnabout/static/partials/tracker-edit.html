@@ -1,8 +1,22 @@
 <section>
 	<h3>Tracker Settings</h3>
-	<div class="ss tightform form">
-		<input type="text" ng-model="tracker.name">
-		<input type="text" ng-model="tracker.title">
-		<input type="button" value="Save" ng-click="save()">
+	<div class="ss tightform">
+		<table class="form">
+			<tbody>
+				<tr>
+					<td>Full&nbsp;Title:</td>
+					<td><input type="text" ng-model="tracker.title" placeholder="Any Characters"></td>
+				</tr>
+				<tr>
+					<td>Short&nbsp;Name:</td>
+					<td><input type="text" ng-model="tracker.name" placeholder="Lowercase a-z, 0-9"></td>
+				</tr>
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="2"><input type="button" value="Save" ng-click="save()"></td>
+				</tr>
+			</tfoot>
+		</table>
 	</div>
 </section>
