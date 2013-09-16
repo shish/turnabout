@@ -4,10 +4,10 @@
 	<div class="row-fluid">
 		<div class="span8">
 
-<section class="story">
-	<div class="ss tightform form">
-		<input ng-model="story.title" style="font-size: 1.5em; height: 2em;" ng-show="story.editing" />
-		<div style="font-size: 1.5em; padding: 0.5em 0.2em;" ng-hide="story.editing">{{story.title}}</div>
+<section>
+	<h3 ng-hide="story.editing">{{story.title}}</h3>
+	<div ng-show="story.editing" class="ss tightform form">
+		<input ng-model="story.title" style="font-size: 1.5em; height: 2em;" />
 	</div>
 	<div class="ss tightform form">
 		<textarea ng-show="story.editing" ng-model="story.description" rows="6"></textarea>
@@ -20,7 +20,7 @@
 		<input ng-model="query" placeholder="Filter {{story.comments.length}} comments" style="width: 100%;">
 	</div>
 
-	<ul>
+	<ul class="nodots">
 		<li class="ss" ng-repeat="comment in story.comments | filter:query">
 			<span class="username">{{comment.user.name || comment.user.username}}</span>
 			<time>{{comment.posted}}</time>
@@ -57,6 +57,9 @@
 			</tr>
 		</table>
 	</div>
+</section>
+
+<section>
 	<div class="ss tightform">
 		<div class="row-fluid" ng-repeat="attachments in story.attachments | groupCount:3">
 			<div class="span4" style="text-align: center;" ng-repeat="attachment in attachments">
@@ -69,7 +72,7 @@
 						border-bottom-left-radius: 4px;
 						width: 1em;" ng-click="attachment_delete(attachment)">x</div>
 				-->
-					<img src="{{attachment.thumbnail_url}}" />
+					<img ng-src="{{attachment.thumbnail_url}}" />
 				</a>
 				{{attachment.filename}}
 				<a ng-click="attachment_delete(attachment)">Delete</a>

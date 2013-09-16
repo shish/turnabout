@@ -15,21 +15,26 @@ INPUT[type="text"] {
 	height: 24px;
 }
 
-SECTION {
-	background: #AAF;
+SECTION,
+SECTION .ss,
+SECTION H3 {
 	border: 1px solid #88A;
 	border-radius: 4px;
 	padding: 4px;
 	margin: 4px;
+}
+SECTION {
+	background: #AAF;
 	box-shadow: 0 0 4px #888;
 	margin-bottom: 1em;
 }
+SECTION H3 {
+	background: #CCE;
+	box-shadow:  0 0 4px #888;
+	text-align: center;
+}
 SECTION .ss {
 	background: #DDF;
-	border: 1px solid #88A;
-	border-radius: 4px;
-	padding: 4px;
-	margin: 4px;
 	box-shadow: inset 0 0 4px #888;
 }
 
@@ -45,9 +50,7 @@ SECTION .ss {
 	width: 100%;
 }
 
-.trackers UL,
-.stories UL,
-.comments UL {
+UL.nodots {
 	list-style: none;
 	margin: 0px;
 	padding: 0px;

@@ -1,0 +1,11 @@
+<section>
+	<div class="ss tightform form">
+		<input type="text" ng-model="query" placeholder="Filter {{stories.length}} stories" />
+	</div>
+
+	<ul ui-sortable ng-model="stories" class="nodots">
+		<li class="ss" ng-repeat="story in stories | filter:query">
+			<a href="#/tracker/{{tracker.tracker_id}}/story/{{story.story_id}}">{{story.story_id}} - {{story.title}} ({{story.type}})</a>
+		</li>
+	</ul>
+</section>

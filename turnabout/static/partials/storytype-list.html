@@ -1,0 +1,18 @@
+<section>
+	<h3>Story Types</h3>
+	<div class="ss tightform form" ng-repeat="storytype in storytypes">
+		{{storytype.name}}: <span style="float: right;">[<a href="">Delete Type</a>]</span>
+		<ul>
+			<li ng-repeat="(key, val) in storytype.fields">
+				{{key}}: {{val}} <span style="float: right;">[<a href="">X</a>]</span>
+			</li>
+			<li>
+				<a href="">Add Field</a>
+			</li>
+		</ul>
+	</div>
+	<div class="ss tightform form">
+		<input type="text" placeholder="Type Name" />
+		<input type="button" value="Add Story Type">
+	</div>
+</section>

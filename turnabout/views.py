@@ -56,6 +56,25 @@ def tracker_create(request):
         name=request.json_body["name"],
         title=request.json_body["title"],
     )
+    tracker.storytypes.append(StoryType(
+        name=u"Feature",
+        fields={
+            "points": "Integer(0, 12)",
+            "state": "State(['iced:scheduled','scheduled:started'])",
+            "requester": "User()",
+            "owner": "User()",
+        }
+    ))
+    tracker.storytypes.append(StoryType(
+        name=u"Bug",
+        fields={
+            "points": "Integer(0, 12)",
+            "state": "State(['iced:scheduled','scheduled:started'])",
+            "requester": "User()",
+            "owner": "User()",
+        }
+    ))
+
     DBSession.add(tracker)
     DBSession.flush()
     return TTResponse(status="ok", tracker_id=tracker.tracker_id)

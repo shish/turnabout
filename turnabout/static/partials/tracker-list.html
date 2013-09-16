@@ -4,19 +4,21 @@
 	<div class="row-fluid">
 		<div class="span6">
 
-<section class="trackers">
+<section>
 	<div class="ss tightform form">
 		<input type="text" ng-model="query" placeholder="Filter {{trackers.length}} trackers" />
 	</div>
 
-	<ul>
+	<ul class="nodots">
 		<li class="ss" ng-repeat="tracker in trackers | filter:query | orderBy:name">
 			<a href="#/tracker/{{tracker.tracker_id}}">{{tracker.title || tracker.name}}</a>
 		</li>
 	</ul>
+</section>
 
+<section>
+	<h3>Create New Tracker</h3>
 	<div class="ss tightform form" ng-controller="TrackerCreateCtrl">
-		Create new tracker:
 		<input type="text" ng-model="tracker.name" placeholder="Name (lowercase a-z, 0-9)" />
 		<input type="text" ng-model="tracker.title" placeholder="Title (any characters)" />
 		<input type="button" ng-click="save()" value="Create">
@@ -27,22 +29,25 @@
 		<div class="span6">
 
 <section>
-	Turnabout Tracker is a project management-ish thing to aid
-	<a href="http://www.halfarsedagilemanifesto.org/">half-assed agile software development</a>.
-	It's similar to other agile trackers, but doesn't force you into doing agile properly
-	if you don't want to.
-	It also has features:
-	<ul>
-		<li>Non-shit text formatting - markdown.
-		<li>Custom fields - add CI test status, reviewer, release notes.
-		<li>Custom story states - if you want a "code review" step between
-		"code written" and "to release", you can do that.
-		<li>Story nesting - rather than just "epic" and "story", you can have
-		a business goal which contains several new features which are broken
-		down into small parts for different people to work on which are broken
-		down into individual tasks.
-		<li>Sortable epics - because not having that feature is dumb.
-	</ul>
+	<h3>About Turnabout</h3>
+	<div class="ss">
+		Turnabout Tracker is a project management-ish thing to aid
+		<a href="http://www.halfarsedagilemanifesto.org/">half-assed agile software development</a>.
+		It's similar to other agile trackers, but doesn't force you into doing agile properly
+		if you don't want to.
+		It also has features:
+		<ul>
+			<li>Non-shit text formatting - markdown.
+			<li>Custom fields - add CI test status, reviewer, release notes.
+			<li>Custom story states - if you want a "code review" step between
+			"code written" and "to release", you can do that.
+			<li>Story nesting - rather than just "epic" and "story", you can have
+			a business goal which contains several new features which are broken
+			down into small parts for different people to work on which are broken
+			down into individual tasks.
+			<li>Sortable epics - because not having that feature is dumb.
+		</ul>
+	</div>
 </section>
 
 		</div>

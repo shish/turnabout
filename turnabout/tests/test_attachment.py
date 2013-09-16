@@ -16,6 +16,7 @@ class TestAttachmentCreate(TurnaboutTest):
                 "file": Mock(
                     filename=u"test.dat",
                     file=StringIO("test data"),
+                    type="text/plain",
                 ),
             },
             user=self.user

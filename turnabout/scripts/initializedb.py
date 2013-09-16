@@ -39,8 +39,10 @@ def main(argv=sys.argv):
     settings = get_appsettings(config_uri, options=options)
     engine = engine_from_config(settings, 'sqlalchemy.')
     DBSession.configure(bind=engine)
+    Base.metadata.drop_all(engine)
     Base.metadata.create_all(engine)
     add_stub_data()
+
 
 def add_stub_data():
     with transaction.manager:
@@ -56,6 +58,7 @@ def add_stub_data():
                 "requester": "User()",
                 "owner": "User()",
                 "reviewer": "User()",
+                "passed_tests": "Boolean()",
             }
         )
         DBSession.add(feature)
@@ -68,6 +71,7 @@ def add_stub_data():
                 "requester": "User()",
                 "owner": "User()",
                 "reviewer": "User()",
+                "passed_tests": "Boolean()",
             }
         )
         DBSession.add(bug)

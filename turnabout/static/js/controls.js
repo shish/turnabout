@@ -26,7 +26,8 @@ function TrackerCreateCtrl($scope, $route, $routeParams, Tracker) {
 
 	$scope.tracker = angular.copy(blank_tracker);
 	$scope.save = function() {
-		Tracker.save($scope.tracker, function() {
+		Tracker.create($scope.tracker, function(response) {
+			$scope.tracker.tracker_id = response.tracker_id;
 			$scope.trackers.push($scope.tracker);
 			$scope.tracker = angular.copy(blank_tracker);
 		});
@@ -39,8 +40,8 @@ function TrackerReadCtrl($scope, $routeParams, Tracker, Story, StoryType) {
 	$scope.storytypes = StoryType.query({tracker_id: $routeParams.tracker_id});
 
 	$scope.save = function() {
-		Tracker.save(angular.copy($scope.tracker), function() {
-			alert("Saved");
+		Tracker.update(angular.copy($scope.tracker), function() {
+			//alert("Saved");
 		});
 	};
 }
@@ -98,7 +99,8 @@ function CommentCreateCtrl($scope, $route, $routeParams, Comment) {
 
 	$scope.comment = angular.copy(blank_comment);
 	$scope.save = function() {
-		Comment.save($scope.comment, function() {
+		Comment.create($scope.comment, function(response) {
+			$scope.comment.comment_id = response.comment_id;
 			$scope.story.comments.push($scope.comment);
 			$scope.comment = angular.copy(blank_comment);
 		});

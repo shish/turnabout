@@ -13,7 +13,7 @@ class TestTrackerList(TurnaboutTest):
 
 
 class TestTrackerCreate(TurnaboutTest):
-    def test(self):
+    def test_pass(self):
         request = testing.DummyRequest(user=self.user, json_body={
             "name": "mytracker",
             "title": u"A new tracker",
@@ -24,6 +24,7 @@ class TestTrackerCreate(TurnaboutTest):
         request = testing.DummyRequest(matchdict={"tracker_id": resp.tracker_id})
         trackers = tracker_list(request)
         self.assertEqual(trackers[-1].title, u"A new tracker")
+        self.assertGreater(len(trackers[-1].storytypes), 0, "New tracker not populated with base story types")
 
 
 class TestTrackerRead(TurnaboutTest):
