@@ -89,6 +89,7 @@ def add_stub_data():
             """,
             storytype=feature,
             tracker=tracker,
+            rank=2000,
             fields={
                 "points": u"3",
                 "state": u"iced",
@@ -113,6 +114,7 @@ def add_stub_data():
             title=u"A Bug Story",
             storytype=bug,
             tracker=tracker,
+            rank=1000,
             fields={
                 "state": u"iced",
                 "requester": u"shish",
@@ -142,6 +144,7 @@ def add_stub_data():
             title=u"A Bug Story (in another tracker)",
             storytype=bug2,
             tracker=tracker2,
+            rank=3000,
             fields={
                 "state": u"iced",
                 "requester": u"shish",

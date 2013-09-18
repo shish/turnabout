@@ -2,6 +2,7 @@ from sqlalchemy import (
     Column, ForeignKey, Index,
     Integer, Float,
     Text, String, Unicode,
+    Boolean,
     DateTime,
     LargeBinary,
     func,
@@ -87,8 +88,9 @@ class Story(Base):
     tracker_id = Column(Integer, ForeignKey("tracker.tracker_id"), nullable=False)
     type_id = Column(Integer, ForeignKey("storytype.storytype_id"), nullable=False)
     description = Column(Unicode, nullable=False, default=u"")
-    rank = Column(Float, nullable=False, default=1000)
+    rank = Column(Float, nullable=False)  # default = time.time()
     fields = Column(postgresql.HSTORE, nullable=False, default={})
+    draft = Column(Boolean, nullable=False, default=False)
 
     storytype = relationship(StoryType)
     tracker = relationship(Tracker, backref=backref("stories", cascade="all, delete-orphan"))

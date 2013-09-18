@@ -1,4 +1,5 @@
 import hashlib
+import time
 
 from pyramid.response import Response
 from pyramid.view import view_config
@@ -116,18 +117,20 @@ def storytype_list(request):
 
 @view_config(request_method="GET", route_name="stories", renderer="json")
 def story_list(request):
-    story = DBSession.query(Story).filter(Story.tracker_id==request.matchdict["tracker_id"]).all()
+    story = DBSession.query(Story).filter(Story.tracker_id==request.matchdict["tracker_id"]).order_by(Story.rank).all()
     return story
 
 
 @view_config(request_method="POST", route_name="stories", renderer="json")
 def story_create(request):
-    storytype = DBSession.query(StoryType).filter(StoryType.tracker_id==request.matchdict["tracker_id"], StoryType.storytype_id==request.json_body["storytype_id"]).one()
+    storytype = DBSession.query(StoryType).filter(StoryType.tracker_id==request.matchdict["tracker_id"]).first()
     story = Story(
         tracker_id=request.matchdict["tracker_id"],
-        title=request.json_body["title"],
-        description=request.json_body["description"],
+        title=request.json_body.get("title", ""),
+        description=request.json_body.get("description", ""),
         storytype=storytype,
+        rank=time.time(),
+        draft=True,
     )
     DBSession.add(story)
     DBSession.flush()
@@ -150,8 +153,17 @@ def story_update(request):
     try:
         story_id = int(request.matchdict["story_id"])
         story = DBSession.query(Story).filter(Story.story_id==story_id).one()
-        story.title = request.json_body["title"]
-        story.description = request.json_body["description"]
+
+        if "title" in request.json_body:
+            story.title = request.json_body["title"]
+        if "description" in request.json_body:
+            story.description = request.json_body["description"]
+        if "rank" in request.json_body:
+            story.rank = request.json_body["rank"]
+        if "state" in request.json_body:
+            story.state = request.json_body["state"]
+
+        story.draft = False
         fields = {}
         fields.update(story.fields)
         fields.update(request.json_body["fields"])

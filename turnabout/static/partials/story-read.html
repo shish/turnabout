@@ -15,7 +15,7 @@
 	</div>
 </section>
 
-<section class="comments" ng-show="story.story_id">
+<section class="comments">
 	<div class="ss tightform">
 		<input ng-model="query" placeholder="Filter {{story.comments.length}} comments" style="width: 100%;">
 	</div>
@@ -42,14 +42,20 @@
 	<div class="ss">
 		<span ng-hide="story.editing"><a ng-click="edit()">Edit</a> |</span>
 		<span ng-show="story.editing"><a ng-click="save()">Save</a> |</span>
-		<span ng-show="story.editing && story.story_id"><a ng-click="cancel()">Cancel</a> |</span>
-		<a ng-click="delete()" ng-show="story.story_id">Delete</a>
+		<span ng-show="story.editing"><a ng-click="cancel()">Cancel</a> |</span>
+		<a ng-click="delete()">Delete</a>
 	</div>
 	<div class="ss">
-		<select ng-model="story.storytype_id">
-			<option ng-repeat="storytype in tracker.storytypes" value="{{storytype.storytype_id}}">{{storytype.name}}</option>
-		</select>
 		<table style="width: auto;" class="form tightform">
+			<thead>
+				<tr>
+					<td colspan="2">
+						<select ng-model="story.storytype_id">
+							<option ng-repeat="storytype in tracker.storytypes" value="{{storytype.storytype_id}}">{{storytype.name}}</option>
+						</select>
+					</td>
+				</tr>
+			</thead>
 			<tr ng-repeat="(key, val) in story.storytype.fields">
 				<td style="text-align: right; padding: 2px 4px;">{{key}}:</td>
 				<td style="width: 100%; padding: 2px 4px;">
@@ -62,7 +68,7 @@
 	</div>
 </section>
 
-<section ng-show="story.story_id">
+<section>
 	<div class="ss tightform">
 		<div class="row-fluid" ng-repeat="attachments in story.attachments | groupCount:3">
 			<div class="span4" style="text-align: center;" ng-repeat="attachment in attachments">

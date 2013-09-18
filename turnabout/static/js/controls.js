@@ -45,6 +45,41 @@ function TrackerReadCtrl($scope, $routeParams, Tracker, Story, StoryType) {
 	$scope.tracker = Tracker.read({tracker_id: $routeParams.tracker_id});
 	$scope.stories = Story.query({tracker_id: $routeParams.tracker_id});
 	$scope.storytypes = StoryType.query({tracker_id: $routeParams.tracker_id});
+	$scope.sortableOptions = {
+		stop: function(e, ui) {
+			var ss = $scope.stories;
+			var prev, current, next;
+
+			for(var i=0; i<ss.length; i++) {
+				current = ss[i];
+
+				if(i == 0) prev = {rank: 0};
+				else prev = ss[i-1];
+
+				if(i == ss.length-1) next = {rank: 9999};
+				else next = ss[i+1];
+
+				// each story should be ranked higher than the one before
+				// (highest rank is 0)
+				if(current.rank > prev.rank) {
+					// we cool
+				}
+				else {
+					// this element is out of order. Make it the average
+					// of the element before and after (assumes that only
+					// one element will ever be out of order at a time)
+					current.rank = prev.rank + 0.1; // (prev.rank + next.rank) / 2;
+					console.log("Re-ranking "+current.title+" as "+current.rank);
+					Story.update(angular.copy(ss[i]));
+				}
+			}
+		}
+	};
+
+	$scope.setState = function(story, state) {
+		story.fields.state = state;
+		Story.update(angular.copy(story));
+	}
 
 	$scope.save = function() {
 		Tracker.update(angular.copy($scope.tracker), function() {
@@ -68,17 +103,11 @@ function StoryCreateCtrl($scope, $route, $routeParams, $location, Story) {
 
 function StoryReadCtrl($scope, $route, $routeParams, $location, Tracker, Story, Comment, Attachment) {
 	$scope.tracker = Tracker.read({tracker_id: $routeParams.tracker_id});
-	if($routeParams.story_id == "new") {
-		$scope.story = {
-			tracker_id: $routeParams.tracker_id,
-			editing: true,
-			comments: [],
-			attachments: [],
-		};
-	}
-	else {
-		$scope.story = Story.get({tracker_id: $routeParams.tracker_id, story_id: $routeParams.story_id});
-	}
+	$scope.story = Story.get({tracker_id: $routeParams.tracker_id, story_id: $routeParams.story_id}, function() {
+		if(!$scope.story.title) {
+			$scope.story.editing = true;
+		}
+	});
 
 	$scope.edit = function() {
 		$scope.story_pre_edit = angular.copy($scope.story);
