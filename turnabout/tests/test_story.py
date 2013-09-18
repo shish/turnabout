@@ -18,7 +18,7 @@ class TestStoryCreate(TurnaboutTest):
         request = testing.DummyRequest(matchdict={"tracker_id": "1"}, user=self.user, json_body={
             "title": u"A new story",
             "description": u"",
-            "storytype": u"feature",
+            "storytype_id": u"1",
         })
         resp = story_create(request)
         self.assertEqual(resp.status, "ok")
@@ -77,7 +77,7 @@ class TestStoryDelete(TurnaboutTest):
         request = testing.DummyRequest(matchdict={"tracker_id": "1"}, user=self.user, json_body={
             "title": u"A new story",
             "description": u"",
-            "storytype": u"feature",
+            "storytype_id": u"1",
         })
         resp = story_create(request)
         self.assertEqual(resp.status, "ok")
