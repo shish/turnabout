@@ -1,7 +1,8 @@
 
-function getStoryType(tracker, name) {
+function getStoryType(tracker, storytype_id) {
+	console.log("Getting storytype", storytype_id);
 	for(t in tracker.storytypes) {
-		if(t.name == name) return t;
+		if(t.storytype_id == storytype_id) return t;
 	}
 }
 
@@ -67,16 +68,34 @@ function StoryCreateCtrl($scope, $route, $routeParams, $location, Story) {
 
 function StoryReadCtrl($scope, $route, $routeParams, $location, Tracker, Story, Comment, Attachment) {
 	$scope.tracker = Tracker.read({tracker_id: $routeParams.tracker_id});
-	$scope.story = Story.get({tracker_id: $routeParams.tracker_id, story_id: $routeParams.story_id});
+	if($routeParams.story_id == "new") {
+		$scope.story = {
+			tracker_id: $routeParams.tracker_id,
+			editing: true,
+			comments: [],
+			attachments: [],
+		};
+	}
+	else {
+		$scope.story = Story.get({tracker_id: $routeParams.tracker_id, story_id: $routeParams.story_id});
+	}
 
 	$scope.edit = function() {
 		$scope.story_pre_edit = angular.copy($scope.story);
 		$scope.story.editing = true;
 	};
 	$scope.save = function() {
-		Story.update(angular.copy($scope.story), function() {
-			$scope.story.editing = false;
-		});
+		if($scope.story.story_id) {
+			Story.update(angular.copy($scope.story), function() {
+				$scope.story.editing = false;
+			});
+		}
+		else {
+			Story.create(angular.copy($scope.story), function(result) {
+				$location.path("/tracker/"+$routeParams.tracker_id+"/story/"+result.story_id);
+				$scope.story.editing = false;
+			});
+		}
 	};
 	$scope.cancel = function() {
 		$scope.story = angular.copy($scope.story_pre_edit);
