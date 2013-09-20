@@ -9,7 +9,8 @@ class TestStoryList(TurnaboutTest):
     def test(self):
         request = testing.DummyRequest(matchdict={"tracker_id": "1"})
         stories = story_list(request)
-        self.assertEqual(stories[0].title, 'A Feature Story')
+        self.assertEqual(stories[0].title, 'A Bug Story')      # test that stories are ordered by rank, not ID
+        self.assertEqual(stories[1].title, 'A Feature Story')
         self.assertNotIn('Another Bug Story (in another tracker)', [s.title for s in stories])
 
 
