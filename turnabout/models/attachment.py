@@ -8,6 +8,7 @@ class Attachment(Base):
     attachment_id = Column(Integer, primary_key=True)
     filename = Column(Unicode, nullable=False)
     data = Column(LargeBinary, nullable=False)
+    thumbnail = Column(LargeBinary, nullable=True)
     hash = Column(String, nullable=False)
     size = Column(Integer, nullable=False)
     mime = Column(String, nullable=False)

@@ -4,7 +4,7 @@ from mock import Mock
 from StringIO import StringIO
 
 from turnabout.tests import TurnaboutTest
-from turnabout.views import attachment_create, attachment_delete
+from turnabout.views import attachment_create, attachment_read, attachment_delete
 from turnabout.views import story_read
 
 
@@ -28,6 +28,14 @@ class TestAttachmentCreate(TurnaboutTest):
         story = story_read(request)
         self.assertEqual(story.attachments[-1].filename, u"test.dat")
         self.assertEqual(story.attachments[-1].hash, "916f0027a575074ce72a331777c3478d6513f786a591bd892da1a577bf2335f9")
+
+
+class TestAttachmentRead(TurnaboutTest):
+    def test_pass(self):
+        request = testing.DummyRequest(matchdict={"tracker_id": "1", "story_id": "1", "attachment_id": "1"})
+        resp = attachment_read(request)
+        self.assertEqual(request.response.content_type, "text/plain")
+        self.assertEqual(resp, "hello world!")
 
 
 class TestAttachmentDelete(TurnaboutTest):
