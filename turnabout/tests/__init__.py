@@ -11,20 +11,17 @@ class TurnaboutTest(unittest.TestCase):
     def setUp(self):
         self.config = testing.setUp()
 
-        #import paste
-        #settings = paste.deploy.appconfig('config:/home/shish/Projects/turnabout/development.ini')
-
         from sqlalchemy import create_engine
-        engine = create_engine('postgres://shish:shish@localhost/test')
+        engine = create_engine('sqlite://')
         DBSession.configure(bind=engine)
         #Base.metadata.drop_all(engine)
         Base.metadata.create_all(engine)
-        DBSession.begin_nested()
+        #DBSession.begin_nested()
         add_stub_data()
 
         self.user = User.by_username("shish")
 
     def tearDown(self):
-        DBSession.rollback()
+        #DBSession.rollback()
         DBSession.remove()
         testing.tearDown()
