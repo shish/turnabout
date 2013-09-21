@@ -13,8 +13,8 @@ angular.module('turnabout', ['ngRoute', 'turnaboutServices', 'ui.sortable', 'ang
 			var rows = [];
 			for (var i = 0; i < input.length; i++) {
 				if ( i % count == 0) rows.push([]);
-					rows[rows.length-1].push(input[i]);
-				}
+				rows[rows.length-1].push(input[i]);
+			}
 			return rows;
 		}
 	})

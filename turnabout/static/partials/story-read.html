@@ -72,14 +72,6 @@
 		<div class="row-fluid" ng-repeat="attachments in story.attachments | groupCount:3">
 			<div class="span4" style="text-align: center; word-wrap: break-word;" ng-repeat="attachment in attachments">
 				<a style="background: white; position: relative;" class="thumbnail" href="{{attachment.data_url}}">
-				<!--
-					<div style="
-						position: absolute; top: 0px; right: 0px;
-						border-left: 1px solid #888;
-						border-bottom: 1px solid #888;
-						border-bottom-left-radius: 4px;
-						width: 1em;" ng-click="attachment_delete(attachment)">x</div>
-				-->
 					<img ng-src="{{attachment.thumbnail_url}}" />
 				</a>
 				{{attachment.filename}}
