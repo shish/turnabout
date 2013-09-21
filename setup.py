@@ -17,7 +17,7 @@ requires = [
     'zope.sqlalchemy',
     'waitress',
 
-    'psycopg2',
+    #'psycopg2',
     'dogpile.cache',
 
     # testing
