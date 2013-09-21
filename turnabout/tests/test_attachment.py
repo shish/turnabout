@@ -32,10 +32,16 @@ class TestAttachmentCreate(TurnaboutTest):
 
 class TestAttachmentRead(TurnaboutTest):
     def test_pass(self):
-        request = testing.DummyRequest(matchdict={"tracker_id": "1", "story_id": "1", "attachment_id": "1"})
+        request = testing.DummyRequest(matchdict={"tracker_id": "1", "story_id": "1", "attachment_id": "1"}, GET={"format": "data"})
         resp = attachment_read(request)
         self.assertEqual(request.response.content_type, "text/plain")
         self.assertEqual(resp, "hello world!")
+
+    def test_pass_thumb(self):
+        request = testing.DummyRequest(matchdict={"tracker_id": "1", "story_id": "1", "attachment_id": "1"}, GET={"format": "thumbnail"})
+        resp = attachment_read(request)
+        self.assertEqual(request.response.content_type, "image/jpeg")
+        self.assertEqual(resp, "thumb")
 
 
 class TestAttachmentDelete(TurnaboutTest):

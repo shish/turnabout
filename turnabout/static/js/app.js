@@ -9,6 +9,7 @@ angular.module('turnabout', ['ngRoute', 'turnaboutServices', 'ui.sortable', 'ang
 	}])
 	.filter('groupCount', function() {
 		return function(input, count) {
+			if(!input) return [];
 			var rows = [];
 			for (var i = 0; i < input.length; i++) {
 				if ( i % count == 0) rows.push([]);

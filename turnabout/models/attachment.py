@@ -24,8 +24,8 @@ class Attachment(Base):
             "attachment_id": self.attachment_id,
             "filename": self.filename,
             "hash": self.hash,
-            "data_url": "x",
-            "thumbnail_url": "/static/img/thumbnail.png",
+            "data_url": "/tracker/%s/story/%s/attachment/%s?format=data" % (request.matchdict["tracker_id"], request.matchdict["story_id"], self.attachment_id),
+            "thumbnail_url": "/tracker/%s/story/%s/attachment/%s?format=thumbnail" % (request.matchdict["tracker_id"], request.matchdict["story_id"], self.attachment_id),
             "posted": str(self.posted)[:16],
         }
         if "tracker_id" in request.matchdict:

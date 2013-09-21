@@ -76,7 +76,7 @@ def configure_user(config):
     config.add_request_method(user, property=True, reify=True)
 
 
-def main(global_config, **settings):
+def main(global_config, **settings):  # pragma: no cover
     engine = engine_from_config(settings, 'sqlalchemy.')
     DBSession.configure(bind=engine)
     Base.metadata.bind = engine

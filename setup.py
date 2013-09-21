@@ -18,6 +18,7 @@ requires = [
     'waitress',
 
     #'psycopg2',
+    'Pillow',
     'dogpile.cache',
 
     # testing
