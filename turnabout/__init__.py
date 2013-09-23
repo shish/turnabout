@@ -9,6 +9,10 @@ from pyramid.security import has_permission
 from sqlalchemy import engine_from_config
 
 import locale
+import logging
+
+log = logging.getLogger(__name__)
+
 
 from .models import (
     DBSession,
@@ -43,7 +47,12 @@ def configure_templates(config):
 
 
 def configure_locale(config, settings):
-    locale.setlocale(locale.LC_ALL, 'en_GB.UTF-8')
+    loc = 'en_GB.UTF-8'
+    try:
+        locale.setlocale(locale.LC_ALL, loc)
+    except locale.Error:
+        # locale doesn't work on windows?
+        log.error("Error setting locale to %r", loc)
 
 
 def configure_cache(config, settings):
