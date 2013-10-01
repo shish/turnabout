@@ -46,8 +46,8 @@ def story_update(request):
             story.description = request.json_body["description"]
         if "rank" in request.json_body:
             story.rank = request.json_body["rank"]
-        if "state" in request.json_body:
-            story.state = request.json_body["state"]
+        if "state_id" in request.json_body:
+            story.state_id = request.json_body["state_id"]
 
         story.draft = False
         fields = {}

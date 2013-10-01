@@ -18,6 +18,8 @@ from turnabout.models import (
     Comment,
     )
 
+import os
+
 
 class TTResponse(object):
     def __init__(self, **kwargs):
@@ -27,9 +29,10 @@ class TTResponse(object):
         return self.__dict__
 
 
-@view_config(route_name='index', renderer='index.mako')
+@view_config(route_name='index', renderer='string')
 def index(request):
-    return {}
+    fn = os.path.join(os.path.dirname(__file__), "..", "templates", "index.html")
+    return Response(file(fn).read(), content_type="text/html")
 
 
 @view_config(context=NotFound, renderer="json")

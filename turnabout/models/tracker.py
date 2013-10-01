@@ -1,5 +1,6 @@
 from .meta import *
 
+
 class Tracker(Base):
     __tablename__ = "tracker"
     tracker_id = Column(Integer, primary_key=True)
@@ -14,6 +15,6 @@ class Tracker(Base):
         }
         if "tracker_id" in request.matchdict:
             d.update({
-                "storytypes": self.storytypes,
+                "storytypes": dict([(st.storytype_id, st) for st in self.storytypes]),
             })
         return d

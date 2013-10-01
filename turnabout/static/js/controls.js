@@ -76,8 +76,8 @@ function TrackerReadCtrl($scope, $routeParams, Tracker, Story, StoryType) {
 		}
 	};
 
-	$scope.setState = function(story, state) {
-		story.fields.state = state;
+	$scope.setState = function(story, state_id) {
+		story.state_id = state_id;
 		Story.update(angular.copy(story));
 	}
 

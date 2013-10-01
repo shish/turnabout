@@ -18,4 +18,9 @@ angular.module('turnabout', ['ngRoute', 'turnaboutServices', 'ui.sortable', 'ang
 			return rows;
 		}
 	})
+	.filter('stateToClass', function() {
+		return function(input) {
+			return "state-" + input.replace(/[^a-zA-Z]/g, '');
+		}
+	})
 	;

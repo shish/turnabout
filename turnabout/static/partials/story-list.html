@@ -4,11 +4,15 @@
 	</div>
 
 	<ul ui-sortable="sortableOptions" ng-model="stories" class="nodots">
-		<li class="ss" ng-repeat="story in stories | filter:query">
+		<li class="ss" ng-repeat="story in stories | filter:query"
+			style="background: #{{tracker.storytypes[story.storytype_id].states[story.state_id].color}}"
+		>
 			<div style="float: right;">
-				{{story.fields.state}} &rarr;
-				<a ng-click="setState(story, 'pass')">Pass</a> /
-				<a ng-click="setState(story, 'fail')">Fail</a>
+				{{tracker.storytypes[story.storytype_id].states[story.state_id].name}} &rarr;
+				
+				<span ng-repeat="next in tracker.storytypes[story.storytype_id].states[story.state_id].next_links">
+					<a ng-click="setState(story, next.state_id)">{{next.label}}</a> /
+				</span>
 			</div>
 			<a href="#/tracker/{{tracker.tracker_id}}/story/{{story.story_id}}">{{story.story_id}} - {{story.title}}</a>
 		</li>
