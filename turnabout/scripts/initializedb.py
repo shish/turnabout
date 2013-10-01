@@ -74,7 +74,7 @@ def add_stub_data():
         DBSession.add(tracker)
 
         feature = StoryType(
-            name=u"feature",
+            name=u"Feature",
             tracker=tracker,
             fields={
                 "points": "Integer(0, 12)",
@@ -88,7 +88,7 @@ def add_stub_data():
         DBSession.add(feature)
 
         bug = StoryType(
-            name=u"bug",
+            name=u"Bug",
             tracker=tracker,
             fields={
                 "requester": "User()",
@@ -168,7 +168,7 @@ def add_stub_data():
         DBSession.add(tracker2)
 
         bug2 = StoryType(
-            name=u"bug",
+            name=u"Bug",
             tracker=tracker2,
             fields={
                 "requester": "User()",

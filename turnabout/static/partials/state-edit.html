@@ -1,0 +1,13 @@
+<span
+	class="stateButton"
+	style="background: #{{tracker.storytypes[story.storytype_id].states[story.state_id].color}}"
+>{{tracker.storytypes[story.storytype_id].states[story.state_id].name}}</span>
+<span ng-show="tracker.storytypes[story.storytype_id].states[story.state_id].next_links">&rarr;</span>
+<span ng-repeat="next in tracker.storytypes[story.storytype_id].states[story.state_id].next_links">
+	<a
+		ng-click="setState(story, next.state_id)"
+		class="stateButton"
+		style="background: #{{tracker.storytypes[story.storytype_id].states[next.state_id].color}}"
+	>{{next.label}}</a>
+	<span ng-show="!$last">/</span>
+</span>

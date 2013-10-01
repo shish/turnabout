@@ -14,6 +14,7 @@ def story_create(request):
         tracker_id=request.matchdict["tracker_id"],
         title=request.json_body.get("title", ""),
         description=request.json_body.get("description", ""),
+        state_id=1,
         storytype=storytype,
         rank=time.time(),
         draft=True,

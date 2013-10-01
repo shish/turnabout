@@ -8,4 +8,4 @@ class TestStoryTypeList(TurnaboutTest):
     def test(self):
         request = testing.DummyRequest(matchdict={"tracker_id": "1"})
         storytypes = storytype_list(request)
-        self.assertEqual(storytypes[0].name, 'feature')
+        self.assertEqual(storytypes[0].name, 'Feature')

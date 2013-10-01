@@ -76,3 +76,9 @@ UL.nodots {
 	float: right;
 	padding-right: 4px;
 }
+
+.stateButton {
+	border: 1px solid #666;
+	border-radius: 4px;
+	padding: 1px 3px;
+}
