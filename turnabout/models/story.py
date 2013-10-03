@@ -12,7 +12,7 @@ class Story(Base):
     type_id = Column(Integer, ForeignKey("storytype.storytype_id"), nullable=False)
     description = Column(Unicode, nullable=False, default=u"")
     rank = Column(Float, nullable=False)  # default = time.time()
-    fields = Column(postgresql.HSTORE, nullable=False, default={})
+    fields = Column(JSONEncodedDict, nullable=False, default={})
     draft = Column(Boolean, nullable=False, default=False)
 
     storytype = relationship(StoryType)

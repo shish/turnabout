@@ -57,7 +57,6 @@ def story_update(request):
         for n in fields.keys():
             if fields[n] is None or fields[n] == "":
                 del fields[n]
-            fields[n] = unicode(fields[n])
         story.fields = fields
         return TTResponse(status="ok")
     except (NoResultFound, ValueError):

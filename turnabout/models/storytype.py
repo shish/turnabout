@@ -7,7 +7,7 @@ class StoryType(Base):
     storytype_id = Column(Integer, primary_key=True)
     tracker_id = Column(Integer, ForeignKey("tracker.tracker_id"), nullable=False)
     name = Column(Unicode, nullable=False)
-    fields = Column(postgresql.HSTORE, nullable=False, default={})
+    fields = Column(JSONEncodedDict, nullable=False, default={})
 
     tracker = relationship(Tracker, backref=backref("storytypes", cascade="all, delete-orphan"))
 

@@ -7,11 +7,12 @@
 <section>
 	<h3 ng-hide="story.editing">{{story.title}}</h3>
 	<div ng-show="story.editing" class="ss tightform form">
-		<input ng-model="story.title" style="font-size: 1.5em; height: 2em;" placeholder="Title" />
+		<input type="text" ng-model="story.title" style="font-size: 1.5em; height: 2em;" placeholder="Title" />
 	</div>
 	<div class="ss tightform form">
-		<textarea ng-show="story.editing" ng-model="story.description" rows="6" placeholder="Description"></textarea>
+		<span ng-hide="story.editing" style="float: right; padding-right: 4px;"><a ng-click="edit()">Edit</a></span>	
 		<markdown ng-model="story.description"></markdown>
+		<textarea ng-show="story.editing" ng-model="story.description" rows="6" placeholder="Description"></textarea>
 	</div>
 </section>
 
@@ -40,9 +41,8 @@
 
 <section>
 	<div class="ss">
-		<span ng-hide="story.editing"><a ng-click="edit()">Edit</a> |</span>
-		<span ng-show="story.editing"><a ng-click="save()">Save</a> |</span>
-		<span ng-show="story.editing"><a ng-click="cancel()">Cancel</a> |</span>
+		<span><a ng-click="save()">Save</a> |</span>
+		<span><a ng-click="cancel()">Cancel</a> |</span>
 		<a ng-click="delete()">Delete</a>
 		
 		<div style="float: right;">
