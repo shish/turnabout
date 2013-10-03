@@ -9,7 +9,7 @@
 	<div ng-show="story.editing" class="ss tightform form">
 		<input type="text" ng-model="story.title" style="font-size: 1.5em; height: 2em;" placeholder="Title" />
 	</div>
-	<div class="ss tightform form">
+	<div class="ss tightform form" style="min-height: 32px;">
 		<span ng-hide="story.editing" style="float: right; padding-right: 4px;"><a ng-click="edit()">Edit</a></span>	
 		<markdown ng-model="story.description"></markdown>
 		<textarea ng-show="story.editing" ng-model="story.description" rows="6" placeholder="Description"></textarea>
