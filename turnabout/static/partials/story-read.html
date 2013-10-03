@@ -17,7 +17,7 @@
 
 <section class="comments">
 	<div class="ss tightform">
-		<input ng-model="query" placeholder="Filter {{story.comments.length}} comments" style="width: 100%;">
+		<input type="text" ng-model="query" placeholder="Filter {{story.comments.length}} comments" style="width: 100%;">
 	</div>
 
 	<ul class="nodots">
@@ -53,7 +53,7 @@
 		<table style="width: auto;" class="form tightform">
 			<thead>
 				<tr>
-					<td colspan="2">
+					<td colspan="3">
 						<select
 							ng-model="story.storytype_id"
 							ng-options="storytype.storytype_id as storytype.name for (storytype_id, storytype) in tracker.storytypes"
@@ -63,17 +63,32 @@
 				</tr>
 			</thead>
 			<tr ng-repeat="(key, val) in tracker.storytypes[story.storytype_id].fields">
-				<td style="text-align: right; padding: 2px 4px;">{{key}}:</td>
-				<td style="width: 100%; padding: 2px 4px;">
-					<span ng-hide="story.editing">{{story.fields[key]}}</span>
-					<input type="text" ng-show="story.editing" ng-model="story.fields[key]" />
+				<td style="width: 10%; white-space: nowrap; text-align: right; padding: 2px 4px;">{{key}}:</td>
+				<td style="padding: 2px 4px;" ng-switch="val">
+					<div ng-switch-when="User()">
+						<select
+							ng-model="story.fields[key]"
+							ng-options="user_name as user_name for (user_name, user) in tracker.users"
+						>
+						</select>
+					</div>
+					<div ng-switch-when="Boolean()">
+						<input type="checkbox" ng-model="story.fields[key]" />
+					</div>
+					<div ng-switch-when="Integer(0, 12)">
+						<input type="number" ng-model="story.fields[key]" min="0" max="12" />
+					</div>
+					<div ng-switch-default>
+						<span ng-hide="story.editing">{{story.fields[key]}}</span>
+						<input type="text" ng-show="story.editing" ng-model="story.fields[key]" />
+					</div>
 				</td>
-				<!-- <td>R: {{val}}</td> -->
+				<td style="width: 10%; white-space: nowrap;">{{val}}</td>
 			</tr>
 		</table>
 	</div>
 </section>
-
+<!--
 <section>
 	<div class="ss tightform">
 		<div class="row-fluid" ng-repeat="attachments in story.attachments | groupCount:3">
@@ -95,7 +110,7 @@
 		</form>
 	</div>
 </section>
-
+-->
 <section>
 	<h3>Debug</h3>
 	<div class="ss" style="overflow: auto;">

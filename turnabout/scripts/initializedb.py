@@ -129,7 +129,7 @@ def add_stub_data():
             user=user,
             filename="test attachment.txt",
             data="hello world!",
-            thumbnail="thumb",
+            thumbnail=None,
             hash="x",
             mime="text/plain",
             size=0,

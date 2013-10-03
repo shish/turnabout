@@ -16,5 +16,10 @@ class Tracker(Base):
         if "tracker_id" in request.matchdict:
             d.update({
                 "storytypes": dict([(st.storytype_id, st) for st in self.storytypes]),
+                "users": {
+                    "shish": {},
+                    "bob": {},
+                    "fred": {},
+                }
             })
         return d

@@ -11,8 +11,10 @@ TABLE TD {
 BODY {
 	background: #DED;
 }
-INPUT[type="text"] {
-	height: 24px;
+INPUT[type="text"],
+INPUT[type="password"],
+INPUT[type="number"] {
+	height: 28px;
 }
 
 SECTION,
@@ -54,7 +56,9 @@ TABLE.form TBODY TD:first-child {
 	margin-bottom: 0px;
 }
 
-.form INPUT,
+.form INPUT[type="text"],
+.form INPUT[type="password"],
+.form INPUT[type="number"],
 .form TEXTAREA,
 .form SELECT {
 	width: 100%;
