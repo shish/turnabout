@@ -59,6 +59,7 @@ TABLE.form TBODY TD:first-child {
 .form INPUT[type="text"],
 .form INPUT[type="password"],
 .form INPUT[type="number"],
+.form INPUT[type="button"],
 .form TEXTAREA,
 .form SELECT {
 	width: 100%;
