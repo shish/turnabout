@@ -25,3 +25,7 @@ turnabout.factory('Comment', function($resource) {
 turnabout.factory('Attachment', function($resource) {
 	return $resource('tracker/:tracker_id/story/:story_id/attachment/:attachment_id', {tracker_id: "@tracker_id", story_id: "@story_id", attachment_id: "@attachment_id"}, CRUD);
 });
+
+turnabout.factory('User', function($resource) {
+	return $resource('user/:user_id', {user_id: "@user_id"}, CRUD);
+});

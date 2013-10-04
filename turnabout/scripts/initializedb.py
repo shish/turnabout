@@ -70,6 +70,9 @@ def add_default_states(s, st):
 
 def add_stub_data():
     with transaction.manager:
+        user = User(username="shish", password="", email="webmaster@shishnet.org")
+        DBSession.add(user)
+
         tracker = Tracker(name='tt', title=u"Test Tracker")
         DBSession.add(tracker)
 
@@ -100,9 +103,6 @@ def add_stub_data():
         iced_bug = add_default_states(DBSession, bug)
         DBSession.add(bug)
 
-        user = User(username="shish", password="")
-        DBSession.add(user)
-
         s1 = Story(
             title=u"A Feature Story",
             description=u"""
@@ -129,7 +129,7 @@ def add_stub_data():
             user=user,
             filename="test attachment.txt",
             data="hello world!",
-            thumbnail=None,
+            thumbnail="thumb",
             hash="x",
             mime="text/plain",
             size=0,

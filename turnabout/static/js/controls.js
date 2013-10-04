@@ -6,7 +6,9 @@ function getStoryType(tracker, storytype_id) {
 	}
 }
 
-turnabout.controller("HeaderCtrl", function($scope, $routeParams, Tracker) {
+turnabout.controller("HeaderCtrl", function($scope, $routeParams, Tracker, User) {
+	$scope.current_user = User.read({user_id: 1});
+
 	if(!$scope.tracker) {
 		if($routeParams.tracker_id) {
 			$scope.tracker = Tracker.read({tracker_id: $routeParams.tracker_id});

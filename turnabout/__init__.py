@@ -25,6 +25,9 @@ def configure_routes(config):
 
     config.add_route('index', '/')
 
+    config.add_route('users', '/user')
+    config.add_route('user', '/user/{user_id}')
+
     config.add_route('trackers', '/tracker')
     config.add_route('tracker', '/tracker/{tracker_id}')
 

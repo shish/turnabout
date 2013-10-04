@@ -53,7 +53,7 @@ def attachment_read(request):
                 return attachment.thumbnail
             else:
                 log.info("Showing generic thumb")
-                return file("turnabout/static/img/thumbnail.png").read()
+                return file(os.path.join(os.path.dirname(__file__), "..", "static/img/thumbnail.png")).read()
         else:
             log.info("Showing full attachment")
             request.response.content_type = str(attachment.mime)

@@ -16,6 +16,7 @@ from turnabout.models import (
     Story,
     Attachment,
     Comment,
+    User,
     )
 
 import os
