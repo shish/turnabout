@@ -21,6 +21,13 @@ turnabout.controller("HeaderCtrl", function($scope, $routeParams, Tracker, User)
 	if(!$scope.trackers) {
 		$scope.trackers = Tracker.list();
 	}
+
+	$scope.session_create = function() {
+		$scope.current_user = User.read({user_id: 1});
+	};
+	$scope.session_delete = function() {
+		$scope.current_user = null;
+	};
 });
 
 turnabout.controller("TrackerListCtrl", function($scope, Tracker) {
