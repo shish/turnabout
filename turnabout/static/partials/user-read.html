@@ -1,0 +1,48 @@
+<div class="container-fluid" ng-controller="UserReadCtrl">
+	<div ng-include src="'static/partials/header.html'"></div>
+
+	<div class="row-fluid">
+		<div class="span6">
+
+<section>
+	<h3>Profile</h3>
+	<div class="ss tightform">
+		<table class="form">
+			<tbody>
+				<tr>
+					<td style="width: 10px;">Name:</td>
+					<td><input type="text" ng-model="user.name" placeholder="Display name" /></td>
+					<td rowspan="3" style="width: 80px; padding-left: 4px;">
+						<img ng-src="http://www.gravatar.com/avatar/{{user.gravatar}}?s=80" style="width: 80px; border-radius: 4px;">
+					</td>
+				</tr>
+				<tr>
+					<td>Login:</td>
+					<td><input type="text" ng-model="user.username" placeholder="Login" /></td>
+				</tr>
+				<tr>
+					<td>Email:</td>
+					<td><input type="text" ng-model="user.email" placeholder="Email" /></td>
+				</tr>
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="3"><input type="button" ng-click="user_update()" value="Save" /></td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+</section>
+
+		</div>
+		<div class="span6">
+
+<section>
+	<h3>Settings</h3>
+	<div class="ss">
+	</div>
+</section>
+
+		</div>
+	</div>
+</div>
