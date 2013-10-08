@@ -13,7 +13,10 @@
 					<td style="width: 10px;">Name:</td>
 					<td><input type="text" ng-model="user.name" placeholder="Display name" /></td>
 					<td rowspan="3" style="width: 80px; padding-left: 4px;">
-						<img ng-src="http://www.gravatar.com/avatar/{{user.gravatar}}?s=80" style="width: 80px; border-radius: 4px;">
+						<img
+							ng-src="http://www.gravatar.com/avatar/{{user.gravatar}}?s=80"
+							style="width: 80px; border-radius: 4px; border: 1px solid #BBB;"
+						>
 					</td>
 				</tr>
 				<tr>
@@ -40,6 +43,13 @@
 <section>
 	<h3>Settings</h3>
 	<div class="ss">
+	</div>
+</section>
+
+<section>
+	<h3>Debug</h3>
+	<div class="ss" style="overflow: auto;">
+		<pre>{{user | json}}</pre>
 	</div>
 </section>
 

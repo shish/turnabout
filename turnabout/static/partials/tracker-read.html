@@ -9,6 +9,13 @@
 			<div ng-include src="'static/partials/story-create.html'"></div>
 			<div ng-include src="'static/partials/storytype-list.html'"></div>
 			<div ng-include src="'static/partials/tracker-edit.html'"></div>
+
+			<section>
+				<h3>Debug</h3>
+				<div class="ss" style="overflow: auto;">
+					<pre>{{tracker | json}}</pre>
+				</div>
+			</section>
 		</div>
 	</div>
 </div>

@@ -31,7 +31,7 @@ turnabout.controller("HeaderCtrl", function($scope, $routeParams, Tracker, User)
 });
 
 turnabout.controller("UserReadCtrl", function($scope, $routeParams, User) {
-	$scope.user = User.read({tracker_id: $routeParams.tracker_id});
+	$scope.user = User.read({user_id: $routeParams.user_id});
 });
 
 turnabout.controller("TrackerListCtrl", function($scope, Tracker) {
