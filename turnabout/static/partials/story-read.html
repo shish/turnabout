@@ -78,6 +78,10 @@
 					<div ng-switch-when="Integer(0, 12)">
 						<input type="number" ng-model="story.fields[key]" min="0" max="12" />
 					</div>
+					<div ng-switch-when="Story()">
+						<span ng-hide="story.editing"><a href="#/tracker/{{story.tracker_id}}/story/{{story.fields[key]}}">#{{story.fields[key]}}</a></span>
+						<input type="text" ng-show="story.editing" ng-model="story.fields[key]" />
+					</div>
 					<div ng-switch-default>
 						<span ng-hide="story.editing">{{story.fields[key]}}</span>
 						<input type="text" ng-show="story.editing" ng-model="story.fields[key]" />

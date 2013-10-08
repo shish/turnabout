@@ -85,6 +85,7 @@ def add_stub_data():
                 "owner": "User()",
                 "reviewer": "User()",
                 "passed_tests": "Boolean()",
+                "parent": "Story()",
             }
         )
         iced_feature = add_default_states(DBSession, feature)
@@ -98,6 +99,7 @@ def add_stub_data():
                 "owner": "User()",
                 "reviewer": "User()",
                 "passed_tests": "Boolean()",
+                "bug in": "Story()",
             }
         )
         iced_bug = add_default_states(DBSession, bug)
