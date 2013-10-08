@@ -86,6 +86,7 @@ def add_stub_data():
                 "reviewer": "User()",
                 "passed_tests": "Boolean()",
                 "parent": "Story()",
+                "requested": "DateTime()",
             }
         )
         iced_feature = add_default_states(DBSession, feature)
@@ -105,6 +106,30 @@ def add_stub_data():
         iced_bug = add_default_states(DBSession, bug)
         DBSession.add(bug)
 
+        epic = StoryType(
+            name=u"Epic",
+            tracker=tracker,
+            fields={
+                "due": "Date()",
+            }
+        )
+        iced = State(storytype=epic, name=u"Iced", color="a2f8f3")
+        in_progress = State(storytype=epic, name=u"In Progress", color="5dde4c")
+        finished = State(storytype=epic, name=u"Finished", color="0c3176")
+        DBSession.add(Transition(iced, in_progress, "Start"))
+        DBSession.add(Transition(in_progress, finished, "Finish"))
+        DBSession.add(epic)
+
+        se = Story(
+            title=u"Take Over The World",
+            storytype=epic,
+            state=iced,
+            tracker=tracker,
+            rank=100,
+        )
+        DBSession.add(se)
+        DBSession.flush()
+
         s1 = Story(
             title=u"A Feature Story",
             description=u"""
@@ -118,6 +143,7 @@ def add_stub_data():
             tracker=tracker,
             rank=2000,
             fields={
+                "parent": unicode(se.story_id),
                 "points": u"3",
                 "state": u"Needs Review",
                 "requester": u"shish",

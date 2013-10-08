@@ -122,6 +122,11 @@ turnabout.controller("StoryReadCtrl", function($scope, $route, $routeParams, $lo
 		}
 	});
 
+	$scope.setState = function(story, state_id) {
+		story.state_id = state_id;
+		Story.update(angular.copy(story));
+	}
+
 	$scope.edit = function() {
 		$scope.story_pre_edit = angular.copy($scope.story);
 		$scope.story.editing = true;

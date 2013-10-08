@@ -5,8 +5,8 @@
 		<div class="span8">
 
 <section>
-	<h3 ng-hide="story.editing">{{story.title}}</h3>
-	<div ng-show="story.editing" class="ss tightform form">
+	<!-- <h3 ng-hide="story.editing">{{story.title}}</h3> -->
+	<div class="ss tightform form">
 		<input type="text" ng-model="story.title" style="font-size: 1.5em; height: 2em;" placeholder="Title" />
 	</div>
 	<div class="ss tightform form" style="min-height: 32px;">
@@ -63,8 +63,8 @@
 				</tr>
 			</thead>
 			<tr ng-repeat="(key, val) in tracker.storytypes[story.storytype_id].fields">
-				<td style="width: 10%; white-space: nowrap; text-align: right; padding: 2px 4px;">{{key}}:</td>
-				<td style="padding: 2px 4px;" ng-switch="val">
+				<td style="width: 10%; white-space: nowrap; text-align: right;">{{key}}:</td>
+				<td style="" ng-switch="val">
 					<div ng-switch-when="User()">
 						<select
 							ng-model="story.fields[key]"
@@ -77,6 +77,12 @@
 					</div>
 					<div ng-switch-when="Integer(0, 12)">
 						<input type="number" ng-model="story.fields[key]" min="0" max="12" />
+					</div>
+					<div ng-switch-when="Date()">
+						<input type="date" ng-model="story.fields[key]" />
+					</div>
+					<div ng-switch-when="DateTime()">
+						<input type="datetime" ng-model="story.fields[key]" />
 					</div>
 					<div ng-switch-when="Story()">
 						<span ng-hide="story.editing"><a href="#/tracker/{{story.tracker_id}}/story/{{story.fields[key]}}">#{{story.fields[key]}}</a></span>

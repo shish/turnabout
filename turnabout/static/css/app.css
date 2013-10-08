@@ -13,13 +13,15 @@ BODY {
 }
 INPUT[type="text"],
 INPUT[type="password"],
+INPUT[type="date"],
+INPUT[type="datetime"],
 INPUT[type="number"] {
 	height: 28px;
 }
 
 SECTION,
 SECTION .ss,
-SECTION H3 {
+SECTION>H3 {
 	border: 1px solid #88A;
 	border-radius: 4px;
 	padding: 4px;
@@ -30,7 +32,7 @@ SECTION {
 	box-shadow: 0 0 4px #888;
 	margin-bottom: 1em;
 }
-SECTION H3 {
+SECTION>H3 {
 	background: #CCE;
 	box-shadow:  0 0 4px #888;
 	text-align: center;
@@ -60,9 +62,14 @@ TABLE.form TBODY TD:first-child {
 .form INPUT[type="password"],
 .form INPUT[type="number"],
 .form INPUT[type="button"],
+.form INPUT[type="date"],
+.form INPUT[type="datetime"],
 .form TEXTAREA,
 .form SELECT {
 	width: 100%;
+}
+.form TD {
+	padding: 2px 4px;
 }
 
 UL.nodots {
