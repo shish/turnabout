@@ -11,7 +11,7 @@
 			<tbody>
 				<tr>
 					<td style="width: 10px;">Name:</td>
-					<td><input type="text" ng-model="user.name" placeholder="Display name" /></td>
+					<td><input type="text" ng-model="user.name" /></td>
 					<td rowspan="3" style="width: 80px; padding-left: 4px;">
 						<img
 							ng-src="http://www.gravatar.com/avatar/{{user.gravatar}}?s=80"
@@ -21,11 +21,11 @@
 				</tr>
 				<tr>
 					<td>Login:</td>
-					<td><input type="text" ng-model="user.username" placeholder="Login" /></td>
+					<td><input type="text" ng-model="user.username" /></td>
 				</tr>
 				<tr>
 					<td>Email:</td>
-					<td><input type="text" ng-model="user.email" placeholder="Email" /></td>
+					<td><input type="email" ng-model="user.email" /></td>
 				</tr>
 			</tbody>
 			<tfoot>
