@@ -22,5 +22,6 @@ class User(Base):
             "name": self.name,
             "gravatar": hashlib.md5(self.email.strip().lower()).hexdigest().lower(),
             "username": self.username,
+            "email": self.email,
         }
         return d

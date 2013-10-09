@@ -6,22 +6,21 @@ function getStoryType(tracker, storytype_id) {
 	}
 }
 
-turnabout.controller("HeaderCtrl", function($scope, $routeParams, Tracker, User) {
+turnabout.controller("MainCtrl", function($scope, $routeParams, Tracker, User) {
 	$scope.current_user = User.read({user_id: 1});
+	$scope.trackers = Tracker.list();
 
-	if(!$scope.tracker) {
+	$scope.$on('$routeChangeSuccess', function (event, routeData) {
 		if($routeParams.tracker_id) {
 			$scope.tracker = Tracker.read({tracker_id: $routeParams.tracker_id});
 		}
 		else {
 			$scope.tracker = null;
 		}
-	}
+	});
+});
 
-	if(!$scope.trackers) {
-		$scope.trackers = Tracker.list();
-	}
-
+turnabout.controller("HeaderCtrl", function($scope, $routeParams, Tracker, User) {
 	$scope.session_create = function() {
 		$scope.current_user = User.read({user_id: 1});
 	};
@@ -32,6 +31,10 @@ turnabout.controller("HeaderCtrl", function($scope, $routeParams, Tracker, User)
 
 turnabout.controller("UserReadCtrl", function($scope, $routeParams, User) {
 	$scope.user = User.read({user_id: $routeParams.user_id});
+
+	$scope.user_update = function() {
+		User.update($scope.user);
+	}
 });
 
 turnabout.controller("TrackerListCtrl", function($scope, Tracker) {
@@ -55,7 +58,6 @@ turnabout.controller("TrackerCreateCtrl", function($scope, $route, $routeParams,
 });
 
 turnabout.controller("TrackerReadCtrl", function($scope, $routeParams, Tracker, Story, StoryType) {
-	$scope.tracker = Tracker.read({tracker_id: $routeParams.tracker_id});
 	$scope.stories = Story.query({tracker_id: $routeParams.tracker_id});
 	$scope.storytypes = StoryType.query({tracker_id: $routeParams.tracker_id});
 	$scope.sortableOptions = {

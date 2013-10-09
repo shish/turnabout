@@ -20,6 +20,10 @@ INPUT[type="number"] {
 	height: 28px;
 }
 
+PRE {
+	margin-bottom: 0px;
+}
+
 SECTION,
 SECTION .ss,
 SECTION>H3 {

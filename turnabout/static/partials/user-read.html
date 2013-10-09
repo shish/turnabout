@@ -1,6 +1,4 @@
 <div class="container-fluid" ng-controller="UserReadCtrl">
-	<div ng-include src="'static/partials/header.html'"></div>
-
 	<div class="row-fluid">
 		<div class="span6">
 
@@ -49,7 +47,7 @@
 <section>
 	<h3>Debug</h3>
 	<div class="ss" style="overflow: auto;">
-		<pre>{{user | json}}</pre>
+		<pre>$scope.user = {{user | json}};</pre>
 	</div>
 </section>
 

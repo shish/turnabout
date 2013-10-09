@@ -42,7 +42,7 @@ def configure_routes(config):
     config.add_route('attachments', '/tracker/{tracker_id}/story/{story_id}/attachment')
     config.add_route('attachment', '/tracker/{tracker_id}/story/{story_id}/attachment/{attachment_id}')
 
-    config.scan("turnabout")
+    config.scan("turnabout.views")
 
 
 def configure_templates(config):

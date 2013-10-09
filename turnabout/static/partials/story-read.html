@@ -1,6 +1,4 @@
 <div class="container-fluid" ng-controller="StoryReadCtrl">
-	<div ng-include src="'static/partials/header.html'"></div>
-
 	<div class="row-fluid">
 		<div class="span8">
 
@@ -85,7 +83,7 @@
 						<input type="datetime" ng-model="story.fields[key]" />
 					</div>
 					<div ng-switch-when="Story()">
-						<span ng-hide="story.editing"><a href="#/tracker/{{story.tracker_id}}/story/{{story.fields[key]}}">#{{story.fields[key]}}</a></span>
+						<span ng-hide="story.editing"><span ng-show="story.fields[key]"><a href="#/tracker/{{story.tracker_id}}/story/{{story.fields[key]}}">#{{story.fields[key]}}</a></span></span>
 						<input type="text" ng-show="story.editing" ng-model="story.fields[key]" />
 					</div>
 					<div ng-switch-default>
@@ -124,7 +122,9 @@
 <section>
 	<h3>Debug</h3>
 	<div class="ss" style="overflow: auto;">
-		<pre>{{story | json}}</pre>
+		<pre>$scope.story = {{story | json}};
+
+$scope.tracker = {{tracker | json}};</pre>
 	</div>
 </section>
 
