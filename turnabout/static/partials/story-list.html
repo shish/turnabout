@@ -8,7 +8,10 @@
 			<div style="float: right;">
 				<div ng-include src="'static/partials/state-edit.html'"></div>
 			</div>
-			<a href="#/tracker/{{tracker.tracker_id}}/story/{{story.story_id}}">{{story.story_id}} - {{story.title}}</a>
+			<a href="#/tracker/{{tracker.tracker_id}}/story/{{story.story_id}}">
+				<img ng-src="/static/img/storytype_icons/{{tracker.storytypes[story.storytype_id].icon}}_16.png">
+				{{story.story_id}} - {{story.title}}
+			</a>
 		</li>
 	</ul>
 </section>

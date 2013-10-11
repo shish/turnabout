@@ -1,6 +1,7 @@
 <section>
 	<h3>Story Types</h3>
 	<div class="ss tightform form" ng-repeat="storytype in storytypes">
+		<img ng-src="/static/img/storytype_icons/{{storytype.icon}}_16.png">
 		{{storytype.name}}: <span style="float: right;">[<a href="">Delete Type</a>]</span>
 		<ul>
 			<li ng-repeat="(key, val) in storytype.fields">

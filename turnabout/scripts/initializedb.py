@@ -78,6 +78,7 @@ def add_stub_data():
 
         feature = StoryType(
             name=u"Feature",
+            icon="feature",
             tracker=tracker,
             fields={
                 "points": "Integer(0, 12)",
@@ -94,6 +95,7 @@ def add_stub_data():
 
         bug = StoryType(
             name=u"Bug",
+            icon="bug",
             tracker=tracker,
             fields={
                 "requester": "User()",
@@ -108,6 +110,7 @@ def add_stub_data():
 
         epic = StoryType(
             name=u"Epic",
+            icon="epic",
             tracker=tracker,
             fields={
                 "due": "Date()",
@@ -197,6 +200,7 @@ def add_stub_data():
 
         bug2 = StoryType(
             name=u"Bug",
+            icon="bug",
             tracker=tracker2,
             fields={
                 "requester": "User()",

@@ -7,6 +7,7 @@ class StoryType(Base):
     storytype_id = Column(Integer, primary_key=True)
     tracker_id = Column(Integer, ForeignKey("tracker.tracker_id"), nullable=False)
     name = Column(Unicode, nullable=False)
+    icon = Column(String, nullable=False, default="blank")
     fields = Column(JSONEncodedDict, nullable=False, default={})
 
     tracker = relationship(Tracker, backref=backref("storytypes", cascade="all, delete-orphan"))
@@ -15,6 +16,7 @@ class StoryType(Base):
         return {
             "storytype_id": self.storytype_id,
             "name": self.name,
+            "icon": self.icon,
             "fields": self.fields,
             "states": dict([(st.state_id, st) for st in self.states]),
         }
