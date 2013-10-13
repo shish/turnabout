@@ -31,6 +31,9 @@ def configure_routes(config):
     config.add_route('trackers', '/tracker')
     config.add_route('tracker', '/tracker/{tracker_id}')
 
+    config.add_route('sessions', '/session')
+    config.add_route('session', '/session/{session_id}')
+
     config.add_route('storytypes', '/tracker/{tracker_id}/storytype')
 
     config.add_route('stories', '/tracker/{tracker_id}/story')

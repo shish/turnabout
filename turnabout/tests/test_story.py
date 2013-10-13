@@ -9,8 +9,9 @@ class TestStoryList(TurnaboutTest):
     def test(self):
         request = testing.DummyRequest(matchdict={"tracker_id": "1"})
         stories = story_list(request)
-        self.assertEqual(stories[0].title, 'A Bug Story')      # test that stories are ordered by rank, not ID
-        self.assertEqual(stories[1].title, 'A Feature Story')
+        self.assertEqual(stories[0].title, 'Take Over The World')
+        self.assertEqual(stories[1].title, 'A Bug Story')      # test that stories are ordered by rank, not ID
+        self.assertEqual(stories[2].title, 'A Feature Story')
         self.assertNotIn('Another Bug Story (in another tracker)', [s.title for s in stories])
 
 
@@ -33,7 +34,7 @@ class TestStoryRead(TurnaboutTest):
     def test_pass(self):
         request = testing.DummyRequest(matchdict={"tracker_id": "1", "story_id": "1"})
         story = story_read(request)
-        self.assertEqual(story.title, "A Feature Story")
+        self.assertEqual(story.title, "Take Over The World")
 
     def test_fail(self):
         request = testing.DummyRequest(matchdict={"tracker_id": "1", "story_id": "9999"})
@@ -45,7 +46,7 @@ class TestStoryRead(TurnaboutTest):
 
 class TestStoryUpdate(TurnaboutTest):
     def test(self):
-        request = testing.DummyRequest(matchdict={"tracker_id": "1", "story_id": "1"})
+        request = testing.DummyRequest(matchdict={"tracker_id": "1", "story_id": "2"})
         story = story_read(request)
         self.assertEqual(story.title, "A Feature Story")
         self.assertEqual(story.fields["points"], u"3")
