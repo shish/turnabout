@@ -14,7 +14,7 @@ class TestSessionCreate(TurnaboutTest):
     def test_fail(self):
         request = testing.DummyRequest(json_body={"username": u"test", "password": u"arrr"})
         resp = session_create(request)
-        self.assertEqual(resp.status, "ok")
+        self.assertEqual(resp.status, "error")
 
 
 class TestSessionDelete(TurnaboutTest):

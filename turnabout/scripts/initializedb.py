@@ -64,13 +64,14 @@ def add_default_states(s, st):
     DBSession.add(Transition(needs_staging_check, to_release, "Pass"))
     DBSession.add(Transition(needs_staging_check, in_progress, "Fail"))
     DBSession.add(Transition(to_release, released, "Release"))
-    
+
     return iced
 
 
 def add_stub_data():
     with transaction.manager:
-        user = User(username="shish", password="", email="webmaster@shishnet.org")
+        user = User(username="shish", email="webmaster@shishnet.org")
+        user.set_password("test")
         DBSession.add(user)
 
         tracker = Tracker(name='tt', title=u"Test Tracker")

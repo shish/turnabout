@@ -1,6 +1,7 @@
 from .meta import *
 
 import hashlib
+import bcrypt
 
 
 class User(Base):
@@ -15,6 +16,12 @@ class User(Base):
     def by_username(username):
         if username:
             return DBSession.query(User).filter(User.username == username).first()
+
+    def check_password(self, password):
+        return (bcrypt.hashpw(password, self.password) == self.password)
+
+    def set_password(self, password):
+        self.password = bcrypt.hashpw(password, bcrypt.gensalt())
 
     def __json__(self, request):
         d = {
