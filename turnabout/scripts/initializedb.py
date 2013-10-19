@@ -74,6 +74,10 @@ def add_stub_data():
         user.set_password("test")
         DBSession.add(user)
 
+        user = User(username="test", email="example@example.com")
+        user.set_password("test")
+        DBSession.add(user)
+
         tracker = Tracker(name='tt', title=u"Test Tracker")
         DBSession.add(tracker)
 

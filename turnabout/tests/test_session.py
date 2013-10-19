@@ -1,6 +1,7 @@
 from pyramid import testing
 from pyramid.exceptions import NotFound
 
+from turnabout.models import User
 from turnabout.tests import TurnaboutTest
 from turnabout.views import session_create, session_delete
 
@@ -20,5 +21,6 @@ class TestSessionCreate(TurnaboutTest):
 class TestSessionDelete(TurnaboutTest):
     def test_pass(self):
         request = testing.DummyRequest()
+        request.user = User.by_username("shish")
         resp = session_delete(request)
         self.assertEqual(resp.status, "ok")

@@ -18,10 +18,10 @@ class User(Base):
             return DBSession.query(User).filter(User.username == username).first()
 
     def check_password(self, password):
-        return (bcrypt.hashpw(password, self.password) == self.password)
+        return (bcrypt.hashpw(password.encode("utf8"), self.password.encode("utf8")) == self.password)
 
     def set_password(self, password):
-        self.password = bcrypt.hashpw(password, bcrypt.gensalt())
+        self.password = bcrypt.hashpw(password.encode("utf8"), bcrypt.gensalt())
 
     def __json__(self, request):
         d = {
