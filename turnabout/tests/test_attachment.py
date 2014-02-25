@@ -63,13 +63,13 @@ class TestAttachmentRead(TurnaboutTest):
         request = testing.DummyRequest(matchdict={"tracker_id": "1", "story_id": "1", "attachment_id": "1"}, GET={"format": "data"})
         resp = attachment_read(request)
         self.assertEqual(request.response.content_type, "text/plain")
-        self.assertEqual(resp, six.binary_type("hello world!", "utf8"))
+        self.assertEqual(resp, six.binary_type("hello world!", "utf8") if six.PY3 else six.binary_type("hello world!"))
 
     def test_pass_thumb(self):
         request = testing.DummyRequest(matchdict={"tracker_id": "1", "story_id": "1", "attachment_id": "1"}, GET={"format": "thumbnail"})
         resp = attachment_read(request)
         self.assertEqual(request.response.content_type, "image/jpeg")
-        self.assertEqual(resp, six.binary_type("thumb", "utf8"))
+        self.assertEqual(resp, six.binary_type("thumb", "utf8") if six.PY3 else six.binary_type("thumb"))
 
 
 class TestAttachmentDelete(TurnaboutTest):
