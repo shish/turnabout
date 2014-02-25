@@ -25,8 +25,8 @@ requires = [
     # testing
     'nose',
     'coverage',
-    'unittest2',
     'mock',
+    #'unittest2',
     ]
 
 setup(name='turnabout',
