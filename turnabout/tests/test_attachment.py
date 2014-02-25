@@ -1,7 +1,8 @@
 from pyramid import testing
 from pyramid.exceptions import NotFound
 from mock import Mock
-from StringIO import StringIO
+from six import StringIO
+import six
 
 from turnabout.tests import TurnaboutTest
 from turnabout.views import attachment_create, attachment_read, attachment_delete
@@ -62,13 +63,13 @@ class TestAttachmentRead(TurnaboutTest):
         request = testing.DummyRequest(matchdict={"tracker_id": "1", "story_id": "1", "attachment_id": "1"}, GET={"format": "data"})
         resp = attachment_read(request)
         self.assertEqual(request.response.content_type, "text/plain")
-        self.assertEqual(resp, "hello world!")
+        self.assertEqual(resp, six.binary_type("hello world!", "utf8"))
 
     def test_pass_thumb(self):
         request = testing.DummyRequest(matchdict={"tracker_id": "1", "story_id": "1", "attachment_id": "1"}, GET={"format": "thumbnail"})
         resp = attachment_read(request)
         self.assertEqual(request.response.content_type, "image/jpeg")
-        self.assertEqual(resp, "thumb")
+        self.assertEqual(resp, six.binary_type("thumb", "utf8"))
 
 
 class TestAttachmentDelete(TurnaboutTest):

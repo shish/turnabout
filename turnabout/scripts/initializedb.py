@@ -1,5 +1,6 @@
 import os
 import sys
+import six
 import transaction
 
 from sqlalchemy import engine_from_config
@@ -151,7 +152,7 @@ def add_stub_data():
             tracker=tracker,
             rank=2000,
             fields={
-                "parent": unicode(se.story_id),
+                "parent": six.text_type(se.story_id),
                 "points": u"3",
                 "state": u"Needs Review",
                 "requester": u"shish",
@@ -164,13 +165,14 @@ def add_stub_data():
         s1.attachments.append(Attachment(
             user=user,
             filename="test attachment.txt",
-            data="hello world!",
-            thumbnail="thumb",
+            data=six.binary_type("hello world!", "utf8") if six.PY3 else six.binary_type("hello world!"),
+            thumbnail=six.binary_type("thumb", "utf8") if six.PY3 else six.binary_type("thumb"),
             hash="x",
             mime="text/plain",
             size=0,
         ))
         DBSession.add(s1)
+        DBSession.flush()
 
         s2 = Story(
             title=u"A Bug Story",
@@ -188,6 +190,7 @@ def add_stub_data():
             text=u"Comment on a bug",
         ))
         DBSession.add(s2)
+        DBSession.flush()
 
         for n in range(0, 20):
             s3 = Story(
@@ -199,6 +202,7 @@ def add_stub_data():
                 fields={"requester": u"shish"}
             )
             DBSession.add(s3)
+        DBSession.flush()
 
         tracker2 = Tracker(name='t2', title=u"Other Tracker")
         DBSession.add(tracker2)

@@ -54,7 +54,7 @@ def story_update(request):
         fields = {}
         fields.update(story.fields)
         fields.update(request.json_body["fields"])
-        for n in fields.keys():
+        for n in list(fields.keys()):
             if fields[n] is None or fields[n] == "":
                 del fields[n]
         story.fields = fields

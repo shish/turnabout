@@ -33,7 +33,7 @@ class TTResponse(object):
 @view_config(route_name='index', renderer='string')
 def index(request):
     fn = os.path.join(os.path.dirname(__file__), "..", "static", "index.html")
-    return Response(file(fn).read(), content_type="text/html")
+    return Response(open(fn).read(), content_type="text/html")
 
 
 @view_config(context=NotFound, renderer="json")

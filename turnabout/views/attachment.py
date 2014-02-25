@@ -1,7 +1,7 @@
 import logging
 
+from six import StringIO
 from .meta import *
-from StringIO import StringIO
 
 log = logging.getLogger(__name__)
 
